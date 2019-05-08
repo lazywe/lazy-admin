@@ -30,7 +30,7 @@ class DbSeeder extends Seeder
                 'order'          => 2,
                 'title'          => '后台用户管理',
                 'icon'           => 'fa-tasks',
-                'uri'            => '',
+                'uri'            => 'root',
                 'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
@@ -41,7 +41,7 @@ class DbSeeder extends Seeder
                 'title'          => '管理员',
                 'icon'           => 'fa-users',
                 'uri'            => 'users',
-                'roles'     => 'administrator',
+                'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],
@@ -51,7 +51,7 @@ class DbSeeder extends Seeder
                 'title'          => '角色',
                 'icon'           => 'fa-user',
                 'uri'            => 'roles',
-                'roles'         => 'administrator',
+                'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],
@@ -61,7 +61,7 @@ class DbSeeder extends Seeder
                 'title'          => '权限',
                 'icon'           => 'fa-ban',
                 'uri'            => 'permissions',
-                'roles'     => 'administrator',
+                'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],
@@ -71,7 +71,7 @@ class DbSeeder extends Seeder
                 'title'          => '菜单管理',
                 'icon'           => 'fa-bars',
                 'uri'            => 'menu',
-                'roles'     => 'administrator',
+                'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],
@@ -101,7 +101,7 @@ class DbSeeder extends Seeder
         // create roles and assign created permissions
         // 管理组
         $role = Role::create(['guard_name' => 'lazy-admin', 'name' => 'administrator', 'title' => '超级管理员']);
-        // $role->givePermissionTo(Permission::all());
+        $role->givePermissionTo(Permission::all());
         // 管理员附加角色
         $user->assignRole($role);
     }
