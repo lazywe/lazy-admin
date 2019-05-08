@@ -1,0 +1,29 @@
+{
+    "name": "lazywe/lazy-admin",
+    "authors": [
+        {
+            "name": "lazywe",
+            "email": "lazywe@163.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^7.5",
+        "spatie/laravel-permission": "^2.29"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lazy\\Admin\\" :"src/"
+        },
+        "files": [
+            "src/tools.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lazy\\Admin\\ServiceProvider",
+                "Spatie\\Permission\\PermissionServiceProvider"
+            ]
+        }
+    }
+}
