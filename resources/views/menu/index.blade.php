@@ -33,7 +33,7 @@
                             @foreach($list as $k => $v)
                             <tr>
                                 <td>{{ $v['order'] }}</td>
-                                <td>{{str_repeat("&nbsp;&nbsp;&nbsp;", $v['level'])}}{{ $v['title'] }}</td>
+                                <td>{!!str_repeat("&nbsp;&nbsp;&nbsp;", $v['level'])!!}{{ $v['title'] }}</td>
                                 <td>
                                     @if(!empty($v['uri']))
                                         {{ $v['uri'] }}    

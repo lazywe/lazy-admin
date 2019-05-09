@@ -33,7 +33,7 @@
                             <select class="form-control" name="parent_id">
                                 <option value="0">根菜单</option>
                                 @foreach($list as $k => $v)
-                                    <option value="{{$v['id']}}" @if($data['parent_id'] == $v['id']) selected @endif>{{str_repeat("&nbsp;&nbsp;", $v['level']+1)}}{{ $v['title'] }}</option>
+                                    <option value="{{$v['id']}}" @if($data['parent_id'] == $v['id']) selected @endif>{!!str_repeat("&nbsp;&nbsp;", $v['level']+1)!!}{{ $v['title'] }}</option>
                                 @endforeach
                             </select>
                         </div>
