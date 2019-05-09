@@ -33,18 +33,23 @@ $ composer require lazywe/lazy-admin
 
     // providers新增如下
     'lazy-admin' => [
-            'driver' => 'eloquent',
-            'model'  => Lazy\Admin\Models\AdminUser::class
+        'driver' => 'eloquent',
+        'model'  => Lazy\Admin\Models\AdminUser::class
     ]
 ````
 
 #### Third
 
-- 修改数据库配置后
-- 执行artisan, 安装依赖
 
+- 生成配置文件
 ````
 $ php7 artisan lazy-admin:install
+````
+
+- 可修改config/lazy-admin.conf 文件中的 connection
+- 生成数据库
+````
+$ php7 artisan lazy-admin:db
 ````
 
 # Usage

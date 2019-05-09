@@ -4,8 +4,8 @@ namespace Lazy\Admin\Models;
 
 use Lazy\Admin\Models\AdminUser;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Lazy\Admin\Models\Role;
+use Lazy\Admin\Models\Permission;
 use Lazy\Admin\Models\Menus;
 
 class DbSeeder extends Seeder
@@ -30,7 +30,7 @@ class DbSeeder extends Seeder
                 'order'          => 2,
                 'title'          => '后台用户管理',
                 'icon'           => 'fa-tasks',
-                'uri'            => 'root',
+                'uri'            => '',
                 'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
@@ -41,7 +41,7 @@ class DbSeeder extends Seeder
                 'title'          => '管理员',
                 'icon'           => 'fa-users',
                 'uri'            => 'users',
-                'roles'          => 'administrator',
+                'roles'     => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],
@@ -51,7 +51,7 @@ class DbSeeder extends Seeder
                 'title'          => '角色',
                 'icon'           => 'fa-user',
                 'uri'            => 'roles',
-                'roles'          => 'administrator',
+                'roles'         => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],
@@ -61,7 +61,7 @@ class DbSeeder extends Seeder
                 'title'          => '权限',
                 'icon'           => 'fa-ban',
                 'uri'            => 'permissions',
-                'roles'          => 'administrator',
+                'roles'     => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],
@@ -71,7 +71,7 @@ class DbSeeder extends Seeder
                 'title'          => '菜单管理',
                 'icon'           => 'fa-bars',
                 'uri'            => 'menu',
-                'roles'          => 'administrator',
+                'roles'     => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],

@@ -2,7 +2,7 @@
 namespace Lazy\Admin\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
+use Lazy\Admin\Models\Permission;
 use Validator;
 
 class PermissionController extends Controller

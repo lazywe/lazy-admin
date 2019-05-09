@@ -5,7 +5,7 @@ namespace Lazy\Admin\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use Lazy\Admin\Models\AdminUser;
-use Spatie\Permission\Models\Role;
+use Lazy\Admin\Models\Role;
 use DB;
 
 class UserController extends Controller

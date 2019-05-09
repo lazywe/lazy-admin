@@ -2,11 +2,11 @@
 namespace Lazy\Admin\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Lazy\Admin\Models\Role;
+use Lazy\Admin\Models\Permission;
 use Validator;
 use DB;
-use PHPUnit\Exception;
+use Exception;
 
 class RoleController extends Controller
 {

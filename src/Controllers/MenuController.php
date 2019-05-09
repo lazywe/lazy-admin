@@ -5,7 +5,7 @@ namespace Lazy\Admin\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use Lazy\Admin\Models\Menus;
-use Spatie\Permission\Models\Role;
+use Lazy\Admin\Models\Role;
 
 class MenuController extends Controller
 {

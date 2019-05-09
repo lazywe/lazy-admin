@@ -7,7 +7,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class AdminUser extends Authenticatable
 {
-    use HasRoles;
+    use HasRoles, Connection;
 
     protected $table = 'admin_users';
 

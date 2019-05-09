@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menus extends Model
 {
+    use Connection;
+
     public $table = 'menus';
 
     /**

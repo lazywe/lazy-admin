@@ -29,5 +29,9 @@ return [
      */
     'super-role' => [
         "administrator"
-    ]
+    ],
+    /**
+     * 自定义数据库链接
+     */
+    'connection' => "default"
 ];

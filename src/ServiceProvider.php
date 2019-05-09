@@ -73,6 +73,7 @@ class ServiceProvider extends LaravelServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \Lazy\Admin\Commands\InstallCommand::class,
+                \Lazy\Admin\Commands\DBCommand::class,
             ]);
         }
     }
@@ -112,6 +113,7 @@ class ServiceProvider extends LaravelServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'lazy-view');
         $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/lazy-admin')], 'lazy-admin-assets');
         $this->publishes([__DIR__.'/../config/lazy-admin.config.php' => config_path('lazy-admin.php')], 'lazy-admin-config');
+        $this->publishes([__DIR__.'/../config/permission.php' => config_path('permission.php')], 'permission');
     }
 
     /**
