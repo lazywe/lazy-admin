@@ -88,15 +88,15 @@ class DbSeeder extends Seeder
         Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-menu-update', 'title' => '菜单管理修改']);
         Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-menu-delete', 'title' => '菜单管理删除']);
 
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-permissions-index', 'title' => '权限管理']);
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-permissions-create', 'title' => '权限管理创建']);
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-mpermissionsenu-update', 'title' => '权限管理修改']);
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-permissions-delete', 'title' => '权限管理删除']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-permission-index', 'title' => '权限管理']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-permission-create', 'title' => '权限管理创建']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-permission-update', 'title' => '权限管理修改']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-permission-delete', 'title' => '权限管理删除']);
 
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-roles-index', 'title' => '角色管理']);
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-roles-create', 'title' => '角色管理创建']);
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-roles-update', 'title' => '角色管理修改']);
-        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-roles-delete', 'title' => '角色管理删除']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-role-index', 'title' => '角色管理']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-role-create', 'title' => '角色管理创建']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-role-update', 'title' => '角色管理修改']);
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-role-delete', 'title' => '角色管理删除']);
 
         // create roles and assign created permissions
         // 管理组
