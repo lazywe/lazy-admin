@@ -33,5 +33,5 @@ return [
     /**
      * 自定义数据库链接
      */
-    'connection' => "default"
+    'connection' => "mysql"
 ];
