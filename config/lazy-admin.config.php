@@ -17,7 +17,7 @@ return [
     'prefix' => "admin",
 
     /**
-     * 后台首页地址
+     * 后台首页地址 routeName
      */
     'index' => "lazy-admin.index",
     /**
