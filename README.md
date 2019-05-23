@@ -6,7 +6,7 @@
 
 - php >= 7.0
 - Composer
-- larave-premission
+- spatie/laravel-permission
 
 # Installation
 
@@ -55,3 +55,32 @@ $ php7 artisan lazy-admin:db
 # Usage
 
 - 打开地址 http://localhost/admin
+- 用户名 admin@gmial.com
+- 密码 123456
+
+
+#### 路由权限完全遵循 larave-premission
+- [前往查看](https://github.com/spatie/laravel-permission)
+
+
+#### 模版 layout
+
+- 建议看resources
+
+````
+    // layout
+    @extends('lazy-view::layout')
+    @section('content')
+    // ... 自定义html
+    @endsection
+
+    // css stack
+    @push('css')
+        // ... css
+    @endpush
+
+    // js stack
+    @push('scripts')
+        // ... 自定义
+    @endpush
+````
