@@ -30,7 +30,7 @@ class DbSeeder extends Seeder
                 'order'          => 2,
                 'title'          => '后台用户管理',
                 'icon'           => 'fa-tasks',
-                'uri'            => '',
+                'uri'            => 'admin-users',
                 'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
