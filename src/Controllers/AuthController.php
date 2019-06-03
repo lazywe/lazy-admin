@@ -44,7 +44,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             return ajaxReturn(1, '成功', ['url'=>route('lazy-admin.home')]);
         } else {
-            return ajaxReturn(0, '登录失败，请重试.');
+            return ajaxReturn(0, '账号密码错误,请重试.');
         }
     }
 
