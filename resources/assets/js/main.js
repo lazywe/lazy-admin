@@ -558,4 +558,32 @@ $(function() {
             $(el).parent('li').addClass('active');
         }
     })
+
+    // 上传组件
+    $('.upload-dom').each(function(e){
+        var t = $(this);
+        var img = t.find('img');
+        var file = img.data('file')
+        var name = img.data('name')
+        var btn = img.data('btn')
+        var value = img.data('value')
+        var html = "<div class='upload-btn'>";
+            html += btn ? btn: "点击上传"
+            html += "<input class='upload-input' type='file' name='" + file + "'>"
+        html += "<input class='upload-input' type='hidden' name='" + name + "' value='" + value +"' >"
+            html += "</div>";
+        t.append(html)
+        t.find(".upload-input").change(function(){
+            var file = $(this);
+            var f = file[0].files[0];
+            if (f != undefined) {
+                var reads = new FileReader();
+                reads.readAsDataURL(f);
+                reads.onload = function (e) {
+                    img.attr('src', this.result);
+                };
+                // 新增还原
+            }
+        })
+    })
 })
