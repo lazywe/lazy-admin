@@ -22,7 +22,7 @@
     <script>
         window.DEBUG = "{{ env('APP_DEBUG', false) }}";
         window.FormToken = "{{ csrf_token() }}"; 
-        window.Referer = "{{ app('url')->previous() }}"
+        window.Referer = "{!! app('url')->previous() !!}"
         window.AdminHome = "/{{ config('lazy-admin.prefix') }}"
     </script>
 </head>
