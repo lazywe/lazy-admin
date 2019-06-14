@@ -330,20 +330,6 @@ $(function() {
     })
 
     /**
-     * 添加回掉函数
-     * 
-     * @param objec e 添加回掉函数 
-     */
-    function createOrUpdate(e) {
-        if (e.status == true) {
-            toastr.success(e.info)
-            history.back(-1)
-        } else {
-            toastr.error(e.info)
-        }
-    }
-
-    /**
      * 重新定义ajax
      *
      * @param string   url     请求地址 
@@ -385,9 +371,9 @@ $(function() {
                         var url = window.location.href;
                         if (data.data.url != undefined) {
                             if (data.data.url == 'back') {
-                                url = Referer;
+                                url = Referer+'#back=-3';
                             } else {
-                                url = data.data.url;            
+                                url = data.data.url;
                             }
                         }
                         window.location.href = url;
@@ -438,7 +424,7 @@ $(function() {
                         var url = window.location.href;
                         if (data.data.url != undefined) {
                             if (data.data.url == 'back') {
-                                url = Referer;
+                                url = Referer+'#back=-3';
                             } else {
                                 url = data.data.url;
                             }
@@ -469,15 +455,6 @@ $(function() {
         });
     }
 
-    /**
-     * 修改驳回内容
-     */
-    $('body').on('click', '.custom-popover-list', function() {
-        var t = $(this)
-        var html = t.html();
-        t.siblings('.custom-popover-info').find('textarea').val(html);
-    })
-
     var loadHtml = '<div class=\'loadingDom\'><i class=\'fa fa-spinner fa-pulse\'></i>处理中...</div>'
     var loadStatus = false;
     /**
@@ -502,12 +479,26 @@ $(function() {
         $.stopLoad();
     })
 
+    $.getHashParameters = function ()
+    {
+        var arr = (location.hash || "").replace(/^\#/,'').split("&");
+        var params = {};
+        for(var i=0; i<arr.length; i++){
+            var data = arr[i].split("=");
+            if(data.length == 2){
+                 params[data[0]] = data[1];
+            }
+        }
+        return params;
+    }
+
     // 全局返回
     $('body').on('click', '.history-back', function() {
-        history.back(1);
+        var params = $.getHashParameters();
+        params['back'] != undefined ? history.go(params['back']):history.go(-1)
     })
 
-    // 不走pjax前往url
+    // 不走前往url
     $('body').on('click', '.goUrl', function(){
         var url = $(this).attr('url');
         window.location.href=url;
@@ -520,11 +511,12 @@ $(function() {
         layer.open({
             type: 2,
             title:title,
+            skin: 'layui-layer-molv',
             area: ['60%', '450px'],
             fixed: true, //不固定
             maxmin: true,
             content: url,
-          });
+        });
     }
 
     /**
@@ -534,6 +526,7 @@ $(function() {
         layer.open({
             type: 2,
             title:title,
+            skin: 'layui-layer-molv',
             area: ['60%', '450px'],
             fixed: true, //不固定
             maxmin: true,
@@ -546,17 +539,6 @@ $(function() {
         var url = t.data('url');
         var title = t.data('title');
         $.openWindow(url, title)
-    })
-
-    $('.sidebar-menu a').each(function(idx, el){
-        var href= $(el).attr('href');
-        if (location.pathname==href) {
-            $(el).parents('.treeview-menu').addClass('menu-open').css({
-                display: 'block',
-            }); 
-            $(el).parents('.treeview').addClass('active');
-            $(el).parent('li').addClass('active');
-        }
     })
 
     // 上传组件

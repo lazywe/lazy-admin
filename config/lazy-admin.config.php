@@ -33,5 +33,10 @@ return [
     /**
      * 自定义数据库链接
      */
-    'connection' => "mysql"
+    'connection' => "mysql",
+
+    /**
+     * cdn更新
+     */
+    'timestamp' => "2019070069",
 ];
