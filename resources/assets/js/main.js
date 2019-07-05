@@ -368,15 +368,17 @@ $(function() {
                 if (typeof callback == 'undefined') {
                     if (data.status == 1) {
                         toastr.success(data.info);
-                        var url = window.location.href;
                         if (data.data.url != undefined) {
+                            var url = window.location.href;
                             if (data.data.url == 'back') {
                                 url = Referer+'#back=-3';
                             } else {
                                 url = data.data.url;
                             }
+                            window.location.href = url;
+                        } else {
+                            window.location.reload();
                         }
-                        window.location.href = url;
                     } else {
                         toastr.error(data.info);
                     }
@@ -421,15 +423,18 @@ $(function() {
                 if (typeof callback == 'undefined') {
                     if (data.status == 1) {
                         toastr.success(data.info);
-                        var url = window.location.href;
                         if (data.data.url != undefined) {
+                            var url = window.location.href;
                             if (data.data.url == 'back') {
                                 url = Referer+'#back=-3';
                             } else {
                                 url = data.data.url;
                             }
+                            window.location.href = url;
+                        } else {
+                            window.location.reload();
                         }
-                        window.location.href = url;
+                        
                     } else {
                         toastr.error(data.info);
                     }
