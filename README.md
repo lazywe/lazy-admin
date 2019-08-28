@@ -38,8 +38,19 @@ $ composer require lazywe/lazy-admin
     ]
 ````
 
-#### Third
+#### 注意
+>  若mysql版本小于5.7.7 需要修改AppServiceProvider
+>
+> 新增如下
+>
+> use Illuminate\Support\ServiceProvider;
+>
+> boot方法新增如下
+>
+> Schema::defaultStringLength(191);
+````
 
+#### Third
 
 - 生成配置文件
 ````
