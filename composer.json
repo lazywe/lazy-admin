@@ -1,18 +1,28 @@
 {
     "name": "lazywe/lazy-admin",
+    "description": "基于laravel的rbac后台系统",
+    "keywords": [
+        "admin",
+        "rbac",
+        "laravel",
+        "laravel admin"
+    ],
     "authors": [
         {
             "name": "lazywe",
             "email": "lazywe@163.com"
         }
     ],
+    "license": "MIT",
     "require": {
-        "phpunit/phpunit": "^7.5",
         "spatie/laravel-permission": "^2.29"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
     },
     "autoload": {
         "psr-4": {
-            "Lazy\\Admin\\" :"src/"
+            "Lazy\\Admin\\": "src/"
         },
         "files": [
             "src/tools.php"
