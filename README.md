@@ -66,7 +66,7 @@ $ php7 artisan lazy-admin:db
 # Usage
 
 - 打开地址 http://localhost/admin
-- 用户名 admin@gmial.com
+- 用户名 admin@gmail.com
 - 密码 123456
 
 
