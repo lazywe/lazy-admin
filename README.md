@@ -49,7 +49,8 @@ $ composer require lazywe/lazy-admin -vvv
 > boot方法新增如下
 >
 > Schema::defaultStringLength(191);
-````
+>
+> **注意修改数据库配置**
 
 #### Third
 
