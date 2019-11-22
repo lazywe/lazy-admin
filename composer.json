@@ -15,7 +15,7 @@
     ],
     "license": "MIT",
     "require": {
-        "spatie/laravel-permission": "^2.29"
+        "spatie/laravel-permission": "^3.3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5"

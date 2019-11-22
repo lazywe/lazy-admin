@@ -6,13 +6,14 @@
 
 - php >= 7.0
 - Composer
+- laravel >= 5.8 小于5.8版本的请装1.0.8版本
 - spatie/laravel-permission
 
 # Installation
 
 #### First
 ````
-$ composer require lazywe/lazy-admin
+$ composer require lazywe/lazy-admin -vvv
 ````
 
 #### Second
