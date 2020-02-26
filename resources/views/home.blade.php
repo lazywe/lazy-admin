@@ -36,12 +36,15 @@
                         <div class="dropdown profile-element">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                                    <span class="text-muted text-xs block">{{ Auth::user()->name }}<b class="caret"></b></span>
+                                    <span class="text-muted text-xs block">{{ Auth::user()->name }}<b
+                                            class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li>
-                                    <a href="javascript:;" class=" operation-confirm-btn" data-method="put" data-confirm-info="确认退出吗?" data-url="{{ route('lazy-admin.logout') }}"><i class="fa fa fa-sign-out"></i> 安全退出</a>
+                                    <a href="javascript:;" class=" operation-confirm-btn" data-method="put"
+                                        data-confirm-info="确认退出吗?" data-url="{{ route('lazy-admin.logout') }}"><i
+                                            class="fa fa fa-sign-out"></i> 安全退出</a>
                                 </li>
                             </ul>
                         </div>
@@ -49,7 +52,8 @@
                         </div>
                     </li>
                     <li>
-                        <a class="J_menuItem j_home active" href="{{ route(config('lazy-admin.index')) }}" data-index="0">
+                        <a class="J_menuItem j_home active" href="{{ route(config('lazy-admin.index')) }}"
+                            data-index="0">
                             <i class="fa fa-home"></i>
                             <span class="nav-label">{{config('lazy-admin.index-title')}}</span>
                         </a>
@@ -67,7 +71,8 @@
                         <ul class="nav nav-second-level">
                             @foreach ($first['son'] as $second)
                             <li>
-                                <a class="{{count($second['son'])>0?'':'J_menuItem' }}" href="{{ lazy_url($second['uri']) }}">
+                                <a class="{{count($second['son'])>0?'':'J_menuItem' }}"
+                                    href="{{ lazy_url($second['uri']) }}">
                                     <i class="fa {{$second['icon']}}"></i>
                                     <span class="nav-label">{{$second['title']}}</span>
                                     @if (count($second['son']) >0)
@@ -79,7 +84,8 @@
                                     @foreach ($second['son'] as $third)
                                     <li>
                                         <i class="fa {{$third['icon']}}"></i>
-                                        <a class="J_menuItem" href="{{ lazy_url($third['uri']) }}">{{$third['title']}}</a>
+                                        <a class="J_menuItem"
+                                            href="{{ lazy_url($third['uri']) }}">{{$third['title']}}</a>
                                     </li>
                                     @endforeach
                                 </ul>
@@ -98,9 +104,13 @@
         <div id="page-wrapper" class="gray-bg dashbard-1">
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+                            href="#"><i class="fa fa-bars"></i> </a>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
+                        <li class="dropdown">
+                            @action('header_right')
+                        </li>
                         <li class="dropdown hidden-xs">
                             <a class="right-sidebar-toggle" aria-expanded="false">
                                 <i class="fa fa-tasks"></i> 主题
@@ -114,7 +124,8 @@
                 </button>
                 <nav class="page-tabs J_menuTabs">
                     <div class="page-tabs-content">
-                        <a href="javascript:;" class="active J_menuTab" data-id="{{ route(config('lazy-admin.index')) }}">{{config('lazy-admin.index-title')}}</a>
+                        <a href="javascript:;" class="active J_menuTab"
+                            data-id="{{ route(config('lazy-admin.index')) }}">{{config('lazy-admin.index-title')}}</a>
                     </div>
                 </nav>
                 <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -134,13 +145,17 @@
                         </li>
                     </ul>
                 </div>
-                <a href="javascript:;" class="roll-nav roll-right J_tabExit operation-confirm-btn" data-method="put" data-confirm-info="确认退出吗?" data-url="{{ route('lazy-admin.logout') }}"><i class="fa fa fa-sign-out"></i> 退出</a>
+                <a href="javascript:;" class="roll-nav roll-right J_tabExit operation-confirm-btn" data-method="put"
+                    data-confirm-info="确认退出吗?" data-url="{{ route('lazy-admin.logout') }}"><i
+                        class="fa fa fa-sign-out"></i> 退出</a>
             </div>
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{ route(config('lazy-admin.index')) }}" data-id="{{ route(config('lazy-admin.index')) }}" frameborder="0" seamless></iframe>
+                <iframe class="J_iframe" name="iframe0" width="100%" height="100%"
+                    src="{{ route(config('lazy-admin.index')) }}" data-id="{{ route(config('lazy-admin.index')) }}"
+                    frameborder="0" seamless></iframe>
             </div>
             <div class="footer">
-                <div class="pull-right">&copy; 2019-2029 
+                <div class="pull-right">&copy; 2019-2029
                 </div>
             </div>
         </div>
@@ -159,7 +174,8 @@
                                 <span>收起左侧菜单</span>
                                 <div class="switch">
                                     <div class="onoffswitch">
-                                        <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu">
+                                        <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox"
+                                            id="collapsemenu">
                                         <label class="onoffswitch-label" for="collapsemenu">
                                             <span class="onoffswitch-inner"></span>
                                             <span class="onoffswitch-switch"></span>
@@ -171,7 +187,8 @@
                                 <span>固定顶部</span>
                                 <div class="switch">
                                     <div class="onoffswitch">
-                                        <input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox" id="fixednavbar">
+                                        <input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox"
+                                            id="fixednavbar">
                                         <label class="onoffswitch-label" for="fixednavbar">
                                             <span class="onoffswitch-inner"></span>
                                             <span class="onoffswitch-switch"></span>
@@ -186,7 +203,8 @@
 
                                 <div class="switch">
                                     <div class="onoffswitch">
-                                        <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout">
+                                        <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox"
+                                            id="boxedlayout">
                                         <label class="onoffswitch-label" for="boxedlayout">
                                             <span class="onoffswitch-inner"></span>
                                             <span class="onoffswitch-switch"></span>
@@ -234,4 +252,5 @@
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ lazy_asset('js/main.js') }}"></script>
 </body>
+
 </html>
