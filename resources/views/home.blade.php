@@ -18,6 +18,7 @@
     <link href="{{ lazy_asset('css/animate.min.css') }}" rel="stylesheet">
     <link href="{{ lazy_asset('css/style.min862f.css') }}" rel="stylesheet">
     <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+    @stack('css')
     <script>
         window.DEBUG = "{{ env('APP_DEBUG', false) }}";
         window.FormToken = "{{ csrf_token() }}"; 
@@ -251,6 +252,7 @@
     <script src="{{ lazy_asset('js/plugins/pace/pace.min.js') }}"></script>
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ lazy_asset('js/main.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>
