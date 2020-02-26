@@ -31,6 +31,10 @@ return [
         "administrator"
     ],
     /**
+     * 权限验证中间件/可更改
+     */
+    'auth-middleware' => "lazy-admin",
+    /**
      * 自定义数据库链接
      */
     'connection' => "mysql",
