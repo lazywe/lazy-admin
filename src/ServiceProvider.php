@@ -24,17 +24,6 @@ class ServiceProvider extends LaravelServiceProvider
     ];
 
     /**
-     * Group
-     *
-     * @var array
-     */
-    public $middlewareGroups = [
-        'lazy-admin' => [
-            'lazy-admin.auth'
-        ]
-    ];
-
-    /**
      * Bootstrap any application services.
      *
      * @return void
@@ -78,7 +67,7 @@ class ServiceProvider extends LaravelServiceProvider
         }
     }
 
-     /**
+    /**
      * load middleware.
      */
     private function loadMiddleware()
@@ -88,9 +77,7 @@ class ServiceProvider extends LaravelServiceProvider
             $this->app->router->aliasMiddleware($key, $middleware);
         }
         // register middleware group.
-        foreach ($this->middlewareGroups as $key => $middleware) {
-            $this->app->router->middlewareGroup($key, $middleware);
-        }
+        $this->app->router->middlewareGroup('lazy-admin', config('lazy-admin.auth-middleware'));
     }
 
     /**
@@ -100,7 +87,7 @@ class ServiceProvider extends LaravelServiceProvider
      */
     private function loadRouter()
     {
-        $this->loadRoutesFrom(__DIR__.'/router.php');
+        $this->loadRoutesFrom(__DIR__ . '/router.php');
     }
 
     /**
@@ -110,10 +97,10 @@ class ServiceProvider extends LaravelServiceProvider
      */
     private function loadResources()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'lazy-view');
-        $this->publishes([__DIR__.'/../resources/assets' => public_path('vendor/lazy-admin')], 'lazy-admin-assets');
-        $this->publishes([__DIR__.'/../config/lazy-admin.config.php' => config_path('lazy-admin.php')], 'lazy-admin-config');
-        $this->publishes([__DIR__.'/../config/permission.php' => config_path('permission.php')], 'permission');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lazy-view');
+        $this->publishes([__DIR__ . '/../resources/assets' => public_path('vendor/lazy-admin')], 'lazy-admin-assets');
+        $this->publishes([__DIR__ . '/../config/lazy-admin.config.php' => config_path('lazy-admin.php')], 'lazy-admin-config');
+        $this->publishes([__DIR__ . '/../config/permission.php' => config_path('permission.php')], 'permission');
     }
 
     /**
@@ -123,6 +110,6 @@ class ServiceProvider extends LaravelServiceProvider
      */
     public function publish()
     {
-        $this->publishes([__DIR__.'/../database' => database_path('migrations')], 'lazy-admin-migrations');
+        $this->publishes([__DIR__ . '/../database' => database_path('migrations')], 'lazy-admin-migrations');
     }
 }

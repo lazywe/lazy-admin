@@ -33,7 +33,9 @@ return [
     /**
      * 权限验证中间件/可更改
      */
-    'auth-middleware' => "lazy-admin",
+    'auth-middleware' => [
+        "lazy-admin.auth"
+    ],
     /**
      * 自定义数据库链接
      */
