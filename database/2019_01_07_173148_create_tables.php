@@ -35,6 +35,17 @@ class CreateTables extends Migration
 
             $table->timestamps();
         });
+        // 创建日志表
+        Schema::create('admin_auth_log', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->default(0);
+            $table->string('ip', 15);
+            $table->string('method', 10)->nullable();
+            $table->string('uri', 255)->nullable();
+            $table->string('params')->nullable();
+
+            $table->timestamps();
+        });
     }
 
     /**

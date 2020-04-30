@@ -45,6 +45,8 @@ Route::group($config, function ($router) {
         $router->get('roles/update/{id}', "RoleController@update")->middleware(['permission:admin-role-update'])->name('lazy-admin.role.update');
         $router->post('roles/updatedo', "RoleController@updateDo")->middleware(['permission:admin-role-update'])->name('lazy-admin.role.updatedo');
         $router->delete('roles/delete/{id}', "RoleController@delete")->middleware(['permission:admin-role-delete'])->name('lazy-admin.role.delete');
+        // 日志管理
+        $router->get('auth/log', "AuthLogController@index")->middleware(['permission:admin-auth-log'])->name('lazy-admin.auth.log');
 
         // 退出
         $router->put('logout', "AuthController@logout")->name('lazy-admin.logout');

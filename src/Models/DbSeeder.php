@@ -74,6 +74,15 @@ class DbSeeder extends Seeder
                 'roles'     => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
+            ],[
+                'parent_id'      => 1,
+                'order'          => 6,
+                'title'          => '日志管理',
+                'icon'           => 'fa-bars',
+                'uri'            => 'auth/log',
+                'roles'     => 'administrator',
+                'created_at'     => date("Y-m-d H:i:s"),
+                'updated_at'     => date("Y-m-d H:i:s")
             ],
         ]);
 
@@ -97,6 +106,8 @@ class DbSeeder extends Seeder
         Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-role-create', 'title' => '角色管理创建']);
         Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-role-update', 'title' => '角色管理修改']);
         Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-role-delete', 'title' => '角色管理删除']);
+
+        Permission::create(['guard_name' => 'lazy-admin', 'name' => 'admin-auth-log', 'title' => '操作日志']);
 
         // create roles and assign created permissions
         // 管理组
