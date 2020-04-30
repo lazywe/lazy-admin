@@ -10,6 +10,10 @@ class AuthLog extends Model
 
     public $table = 'admin_auth_log';
 
+    protected $casts = [
+        'params' => 'array'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,4 +28,9 @@ class AuthLog extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(AdminUser::class, 'user_id', 'id');
+    }
 }

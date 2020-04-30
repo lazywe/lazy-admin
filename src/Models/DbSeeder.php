@@ -76,7 +76,7 @@ class DbSeeder extends Seeder
                 'updated_at'     => date("Y-m-d H:i:s")
             ],[
                 'parent_id'      => 1,
-                'order'          => 6,
+                'order'          => 2,
                 'title'          => '日志管理',
                 'icon'           => 'fa-bars',
                 'uri'            => 'auth/log',

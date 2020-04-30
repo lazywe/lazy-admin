@@ -18,11 +18,11 @@ class AuthLog
      */
     public function handle($request, Closure $next)
     {
-        $uri = $request->url();
+        $uri = $request->path();
         $ip = $request->getClientIp();
         $method = $request->method();
         $params = $request->all();
-        $userId = Auth::Id()??'';
+        $userId = Auth::Id()??0;
         // 创建日志
         ModelsAuthLog::create([
             'uri' => $uri,

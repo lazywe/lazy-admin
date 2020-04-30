@@ -7,8 +7,10 @@ $config = [
 ];
 Route::group($config, function ($router) {
     // 登录
-    $router->get('login', "AuthController@login")->name('lazy-admin.login');
-    $router->post('logindo', "AuthController@loginDo")->name('lazy-admin.logindo');
+    $router->middleware('lazy-admin.log')->group(function($router){
+        $router->get('login', "AuthController@login")->name('lazy-admin.login');
+        $router->post('logindo', "AuthController@loginDo")->name('lazy-admin.logindo');
+    });
     // 权限内功能
     $router->middleware('lazy-admin')->group(function ($router) {
         // 管理页面
