@@ -9,6 +9,10 @@
 - laravel >= 5.8 小于5.8版本的请装1.0.8版本
 - spatie/laravel-permission
 
+# demo
+![WX20200430-142527](https://user-images.githubusercontent.com/19222354/80681149-aac55800-8af2-11ea-9dc2-0473e8d16fd7.png)
+
+
 # Installation
 
 #### First
