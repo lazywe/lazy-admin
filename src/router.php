@@ -7,8 +7,10 @@ $config = [
 ];
 Route::group($config, function ($router) {
     // 登录
-    $router->get('login', "AuthController@login")->name('lazy-admin.login');
-    $router->post('logindo', "AuthController@loginDo")->name('lazy-admin.logindo');
+    $router->middleware('lazy-admin.log')->group(function($router){
+        $router->get('login', "AuthController@login")->name('lazy-admin.login');
+        $router->post('logindo', "AuthController@loginDo")->name('lazy-admin.logindo');
+    });
     // 权限内功能
     $router->middleware('lazy-admin')->group(function ($router) {
         // 管理页面
@@ -45,6 +47,8 @@ Route::group($config, function ($router) {
         $router->get('roles/update/{id}', "RoleController@update")->middleware(['permission:admin-role-update'])->name('lazy-admin.role.update');
         $router->post('roles/updatedo', "RoleController@updateDo")->middleware(['permission:admin-role-update'])->name('lazy-admin.role.updatedo');
         $router->delete('roles/delete/{id}', "RoleController@delete")->middleware(['permission:admin-role-delete'])->name('lazy-admin.role.delete');
+        // 日志管理
+        $router->get('auth/log', "AuthLogController@index")->middleware(['permission:admin-auth-log'])->name('lazy-admin.auth.log');
 
         // 退出
         $router->put('logout', "AuthController@logout")->name('lazy-admin.logout');
