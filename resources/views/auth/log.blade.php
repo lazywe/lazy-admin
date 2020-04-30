@@ -42,7 +42,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <pre style="white-space: pre-wrap;">{{$v['params']?var_dump($v['params']):'-'}}</pre>
+                                    <pre style="white-space: pre-wrap;">{{$v['params']?json_encode($v['params'], JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT):'-'}}</pre>
                                 </td>
                                 <td>{{ $v['created_at'] }}</td>
                                 <td>{{ $v['updated_at'] }}</td>
