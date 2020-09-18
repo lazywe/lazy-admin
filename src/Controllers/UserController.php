@@ -52,7 +52,7 @@ class UserController extends Controller
         $credentials = $request->only('name', 'email', 'password', 'role');
         $validator = Validator::make($credentials, [
             'name'              => 'required',
-            'email'             => 'required|email|unique:admin_users',
+            'email'             => 'required|email|unique:Lazy\Admin\Models\AdminUser',
             'password'          => 'required|min:6',
         ], [
             'name.required'     => '名字不能为空.',
@@ -117,7 +117,7 @@ class UserController extends Controller
         $validator = Validator::make($credentials, [
             'id'                   => 'required',
             'name'                 => 'required',
-            'email'                => 'required|email|unique:admin_users,email,'. $credentials['id'],
+            'email'                => 'required|email|unique:Lazy\Admin\Models\AdminUser,email,'. $credentials['id'],
             'password'             => 'sometimes|min:6',
         ], [
             'id.required'          => '非法操作,id不能为空.',

@@ -46,7 +46,7 @@ class PermissionController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:permissions'
+                'unique:Lazy\Admin\Models\Permission'
             ],
         ], [
             'title.required'     => '名称不能为空.',
@@ -99,7 +99,7 @@ class PermissionController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:permissions,name,'. $credentials['id']
+                'unique:Lazy\Admin\Models\Permission,name,'. $credentials['id']
             ],
         ], [
             'id.required' => '非法操作.',

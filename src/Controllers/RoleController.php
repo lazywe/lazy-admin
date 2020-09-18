@@ -51,7 +51,7 @@ class RoleController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:roles'
+                'unique:Lazy\Admin\Models\Role'
             ],
         ], [
             'title.required' => '名称不能为空.',
@@ -115,7 +115,7 @@ class RoleController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:roles,name,' . $credentials['id'],
+                'unique:Lazy\Admin\Models\Role,name,' . $credentials['id'],
             ],
         ], [
             'id.required'     => '非法操作.',

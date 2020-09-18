@@ -42,7 +42,7 @@ class CreateTables extends Migration
             $table->string('ip', 15);
             $table->string('method', 10)->nullable();
             $table->string('uri', 255)->nullable();
-            $table->string('params')->nullable();
+            $table->text('params')->nullable();
 
             $table->timestamps();
         });
