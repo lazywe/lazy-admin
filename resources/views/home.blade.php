@@ -78,7 +78,6 @@
                                 <ul class="nav nav-third-level">
                                     @foreach ($second['son'] as $third)
                                     <li>
-                                        <i class="fa {{$third['icon']}}"></i>
                                         <a class="J_menuItem" href="{{ lazy_url($third['uri']) }}">{{$third['title']}}</a>
                                     </li>
                                     @endforeach
