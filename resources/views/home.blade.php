@@ -68,7 +68,6 @@
                             @foreach ($first['son'] as $second)
                             <li>
                                 <a class="{{count($second['son'])>0?'':'J_menuItem' }}" href="{{ lazy_url($second['uri']) }}">
-                                    <i class="fa {{$second['icon']}}"></i>
                                     <span class="nav-label">{{$second['title']}}</span>
                                     @if (count($second['son']) >0)
                                     <span class="fa arrow"></span>

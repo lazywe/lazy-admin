@@ -27,7 +27,7 @@
                      <div class="form-group">
                         <label class="col-sm-2 control-label"><font class="text-danger">* </font>上级菜单：</label>
                         <div class="col-sm-9">
-                            <select class="form-control" name="parent_id">
+                            <select class="form-control menu" name="parent_id">
                                 <option value="0">根菜单</option>
                                 @foreach($list as $k => $v)
                                     <option value="{{$v['id']}}">{!!str_repeat("&nbsp;&nbsp;", $v['level']+1)!!}{{ $v['title'] }}</option>
@@ -38,13 +38,13 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label"><font class="text-danger">* </font>菜单地址：</label>
                         <div class="col-sm-9">
-                            <input type="text" name="uri" class="form-control" placeholder="请输入菜单地址"> 
+                            <input type="text" name="uri" class="form-control" placeholder="请输入菜单地址">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">icon：</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="icon" placeholder="请输入icon, 例如：fa-home"><span class="help-block m-b-none">立即前往，<a href="http://fontawesome.dashgame.com/#new" target="_blank">fontawesome</a></span>
+                            <input type="text" class="form-control icon" name="icon" placeholder="请输入icon, 例如：fa-home"><span class="help-block m-b-none">立即前往，<a href="http://fontawesome.dashgame.com/#new" target="_blank">fontawesome</a></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -84,6 +84,17 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
+
+        $('body').on("change", '.menu', function(){
+            var t = $(this)
+            var value = t.val();
+            if (value == 0) {
+                $(".icon").removeAttr("disabled");
+            } else {
+                $(".icon").val("");
+                $(".icon").attr("disabled", true);
+            }
+        })
     });
 </script>
 @endpush
