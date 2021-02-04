@@ -150,7 +150,7 @@ class ServiceProvider extends LaravelServiceProvider
                 if (empty($guard)) {
                     $guard = $defaultGuard;
                 }
-                return "<?php if(!auth({$guard})->check() || ! auth({$guard})->user()->hasRole({$role})): ?>";
+                return "<?php if(!auth({$guard})->check() || !auth({$guard})->user()->hasRole({$role})): ?>";
             });
             $bladeCompiler->directive('end_lazy_unlessrole', function () {
                 return '<?php endif; ?>';

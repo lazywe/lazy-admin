@@ -76,7 +76,7 @@ $ php7 artisan lazy-admin:db
 - lazy-admin
 - <font style="font-size:20px" color="red">注意：所有需要权限验证的路由需要使用``lazy-admin``中间件，否则...</font>
 
-### 后台权限组： <font style="font-size:20px" color="yellow">App\Providers\RouteServiceProvider::class</font> 文件新增如下
+-  <font style="font-size:20px" color="yellow">App\Providers\RouteServiceProvider::class</font> 文件新增如下
 
 ```php
 <?php
@@ -114,8 +114,26 @@ $ php7 artisan lazy-admin:db
 
 ```
 
-### 路由权限完全遵循 larave-premission
-- [前往查看](https://github.com/spatie/laravel-permission)
+## 路由权限遵循 larave-premission
+
+```php
+    // 控制角色 多个 |隔开
+    Route::group(['middleware' => ['role:administrator']], function () {
+    });
+
+    // 控制权限 多个 |隔开
+    Route::group(['middleware' => ['permission:user-create']], function () {
+        //
+    });
+    // 控制角色 多个|隔开 + 控制权限 多个|隔开
+    Route::group(['middleware' => ['role:administrator','permission:user-create']], function () {
+    });
+    // 控制角色 或者 控制权限 多个|隔开
+    Route::group(['middleware' => ['role_or_permission:administrator|user-create']], function () {
+        //
+    });
+```
+- [文档修改来自laravel-permission](https://github.com/spatie/laravel-permission)
 
 
 ### 模版 layout
@@ -138,6 +156,58 @@ $ php7 artisan lazy-admin:db
     @push('scripts')
         // ... 自定义
     @endpush
+```
+
+- blade and 权限
+
+- 权限认证
+
+```php
+    @lazy_can('user-create')
+        // ...
+    @else_lazy_can('user-all-create')
+        // ...
+    @end_lazy_can
+```
+
+- 用户组权限认证
+
+```php
+    @lazy_role('administrator')
+        // ...
+    @else_lazy_role('editor')
+        // ...
+    @else_lazy_role
+```
+
+- 用户组权限认证 满足任一角色通过
+
+```php
+    @lazy_hasanyrole('administrator｜editor')
+        // ...
+    @else
+        // ...
+    @end_lazy_hasanyrole
+```
+
+- 用户组权限认证 满足所有角色通过
+
+```php
+    @lazy_hasallroles('administrator｜editor')
+        // ...
+    @else
+        // ...
+    @end_lazy_hasallroles
+```
+
+- 用户组权限认证 不满足当前角色通过
+
+```php
+    @lazy_unlessrole('administrator')
+        // ...
+    @else
+        // ...
+    @end_lazy_unlessrole
 ```
 
 - 模版其他详细功能建议看resources
