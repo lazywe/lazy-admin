@@ -44,7 +44,15 @@ class AuthController extends Controller
         }
         $guardName = Guard::ADMIN_GUARD;
         if (Auth::guard($guardName)->attempt($credentials)) {
-            return ajaxReturn(1, '成功', ['url'=>route('lazy-admin.home')]);
+            // 跳回判断
+            $previousUrl = $request->session()->get('previous_url');
+            if (!empty($previousUrl)) {
+                $request->session()->forget('previous_url');
+                $url = $previousUrl;
+            } else {
+                $url = route('lazy-admin.home');
+            }
+            return ajaxReturn(1, '成功', ['url'=>$url]);
         } else {
             return ajaxReturn(0, '账号密码错误,请重试.');
         }

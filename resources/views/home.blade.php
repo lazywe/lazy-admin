@@ -13,11 +13,11 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
     <link rel="shortcut icon" href="{{ lazy_asset('img/favicon.ico') }}">
-    <link href="{{ lazy_asset('css/bootstrap.min14ed.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/font-awesome.min93e3.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/style.min862f.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/bootstrap.min14ed.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/font-awesome.min93e3.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/animate.min.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/style.min862f.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
     <script>
         window.DEBUG = "{{ env('APP_DEBUG', false) }}";
         window.FormToken = "{{ csrf_token() }}";
@@ -221,15 +221,15 @@
             </div>
         </div>
     </div>
-    <script src="{{ lazy_asset('js/jquery.min.js?v=2.1.4') }}"></script>
-    <script src="{{ lazy_asset('js/bootstrap.min.js?v=3.3.6') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/layer/layer.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/hplus.min.js?v=4.1.0') }}"></script>
-    <script src="{{ lazy_asset('js/contabs.min.js?t=1.0.2') }}"></script>
+    <script src="{{ lazy_asset('js/jquery.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/bootstrap.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/plugins/metisMenu/jquery.metisMenu.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/plugins/layer/layer.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/hplus.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/contabs.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/plugins/pace/pace.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/main.js') }}"></script>
+    <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/main.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
 </body>
 </html>
