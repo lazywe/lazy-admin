@@ -44,10 +44,6 @@ return [
         "menu"  => "admin_menus" // 后台栏目名字
     ],
     /**
-     * permission guard name
-     */
-    'guard_name' => "lazy-admin",
-    /**
      * cdn更新
      */
     'timestamp' => "2019070069",

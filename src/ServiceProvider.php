@@ -3,11 +3,11 @@
 namespace Lazy\Admin;
 
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Middlewares\RoleMiddleware;
-use Spatie\Permission\Middlewares\PermissionMiddleware;
-use Spatie\Permission\Middlewares\RoleOrPermissionMiddleware;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
+use Lazy\Admin\Middleware\PermissionMiddleware;
+use Lazy\Admin\Middleware\RoleMiddleware;
+use Lazy\Admin\Middleware\RoleOrPermissionMiddleware;
 
 class ServiceProvider extends LaravelServiceProvider
 {
@@ -52,6 +52,11 @@ class ServiceProvider extends LaravelServiceProvider
         $this->isSuperAdmin();
     }
 
+    public function register()
+    {
+        $this->registerBladeExtensions();
+    }
+
     /**
      * 某些人赋予所有权限
      *
@@ -61,9 +66,96 @@ class ServiceProvider extends LaravelServiceProvider
     {
         if (!$this->app->runningInConsole()) {
             Gate::before(function ($user, $ability) {
-                return $user->hasRole(config("lazy-admin.super-role", "administrator")) ? true : null;
+                return $user->hasRole(config("lazy-admin.super-role", "administrator"), Guard::ADMIN_GUARD) ? true : null;
             });
         }
+    }
+
+    /**
+     * 注册模版权限标签
+     *
+     * @return void
+     */
+    protected function registerBladeExtensions()
+    {
+        $defaultGuard = sprintf("'%s'",  Guard::ADMIN_GUARD);
+        // dd($defaultGuard);
+        $this->app->afterResolving('blade.compiler', function (BladeCompiler $bladeCompiler) use ($defaultGuard) {
+            // dd(12333);
+            // can 权限认证
+            $bladeCompiler->directive('lazy_can', function ($arguments) use ($defaultGuard) {
+                list($role, $guard) = explode(',', $arguments.',');
+                if (empty($guard)) {
+                    $guard = $defaultGuard;
+                }
+                return "<?php if(auth({$guard})->check() && auth({$guard})->user()->hasPermissionTo({$role})): ?>";
+            });
+            $bladeCompiler->directive('else_lazy_can', function ($arguments) use ($defaultGuard)  {
+                list($role, $guard) = explode(',', $arguments.',');
+                if (empty($guard)) {
+                    $guard = $defaultGuard;
+                }
+                return "<?php elseif(auth({$guard})->check() && auth({$guard})->user()->hasPermissionTo({$role})): ?>";
+            });
+            $bladeCompiler->directive('end_lazy_can', function () {
+                return '<?php endif; ?>';
+            });
+
+            // 角色认证
+            $bladeCompiler->directive('lazy_role', function ($arguments) use ($defaultGuard) {
+                list($role, $guard) = explode(',', $arguments.',');
+                if (empty($guard)) {
+                    $guard = $defaultGuard;
+                }
+                return "<?php if(auth({$guard})->check() && auth({$guard})->user()->hasRole({$role})): ?>";
+            });
+            $bladeCompiler->directive('else_lazy_role', function ($arguments) use ($defaultGuard)  {
+                list($role, $guard) = explode(',', $arguments.',');
+                if (empty($guard)) {
+                    $guard = $defaultGuard;
+                }
+                return "<?php elseif(auth({$guard})->check() && auth({$guard})->user()->hasRole({$role})): ?>";
+            });
+            $bladeCompiler->directive('end_lazy_role', function () {
+                return '<?php endif; ?>';
+            });
+
+            // 多个角色认证 多个 | 隔开
+            $bladeCompiler->directive('lazy_hasanyrole', function ($arguments) use ($defaultGuard)  {
+                list($roles, $guard) = explode(',', $arguments.',');
+                if (empty($guard)) {
+                    $guard = $defaultGuard;
+                }
+                return "<?php if(auth({$guard})->check() && auth({$guard})->user()->hasAnyRole({$roles})): ?>";
+            });
+            $bladeCompiler->directive('end_lazy_hasanyrole', function () {
+                return '<?php endif; ?>';
+            });
+
+            // 包含所有角色
+            $bladeCompiler->directive('lazy_hasallroles', function ($arguments) use ($defaultGuard)  {
+                list($roles, $guard) = explode(',', $arguments.',');
+                if (empty($guard)) {
+                    $guard = $defaultGuard;
+                }
+                return "<?php if(auth({$guard})->check() && auth({$guard})->user()->hasAllRoles({$roles})): ?>";
+            });
+            $bladeCompiler->directive('end_lazy_hasallroles', function () {
+                return '<?php endif; ?>';
+            });
+
+            // 不包含当前角色
+            $bladeCompiler->directive('lazy_unlessrole', function ($arguments) use ($defaultGuard)  {
+                list($role, $guard) = explode(',', $arguments.',');
+                if (empty($guard)) {
+                    $guard = $defaultGuard;
+                }
+                return "<?php if(!auth({$guard})->check() || ! auth({$guard})->user()->hasRole({$role})): ?>";
+            });
+            $bladeCompiler->directive('end_lazy_unlessrole', function () {
+                return '<?php endif; ?>';
+            });
+        });
     }
 
     /**

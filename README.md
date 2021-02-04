@@ -24,7 +24,7 @@ $ composer require lazywe/lazy-admin -vvv
 - 修改config/auth.php
 
 ````
-    // guards 新增如下 guards名字应与lazy-admin.guard_name一致，否则无法使用
+    // guards 新增如下
     'lazy-admin' => [
         'driver'   => 'session',
         'provider' => 'lazy-admin',

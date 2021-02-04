@@ -20,7 +20,7 @@
     <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
     <script>
         window.DEBUG = "{{ env('APP_DEBUG', false) }}";
-        window.FormToken = "{{ csrf_token() }}"; 
+        window.FormToken = "{{ csrf_token() }}";
     </script>
 </head>
 
@@ -36,7 +36,7 @@
                         <div class="dropdown profile-element">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                                    <span class="text-muted text-xs block">{{ Auth::user()->name }}<b class="caret"></b></span>
+                                    <span class="text-muted text-xs block">{{ lazyAdminUser()->name }}<b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -138,7 +138,7 @@
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{ route(config('lazy-admin.index')) }}" data-id="{{ route(config('lazy-admin.index')) }}" frameborder="0" seamless></iframe>
             </div>
             <div class="footer">
-                <div class="pull-right">&copy; 2019-2029 
+                <div class="pull-right">&copy; 2019-2029
                 </div>
             </div>
         </div>

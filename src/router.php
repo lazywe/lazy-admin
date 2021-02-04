@@ -18,14 +18,14 @@ Route::group($config, function ($router) {
         // 后台首页，可通过lazy-config.index自定义
         $router->get('index', "HomeController@index")->name('lazy-admin.index');
         // 管理员管理
-        $router->get('users', "UserController@index")->middleware(['permission:admin-user-index'])->name('lazy-admin.user.index');
+        $router->get('users', "UserController@index")->middleware(["permission:admin-user-index"])->name('lazy-admin.user.index');
         $router->get('users/create', "UserController@create")->middleware(['permission:admin-user-create'])->name('lazy-admin.user.create');
         $router->post('users/createdo', "UserController@createDo")->middleware(['permission:admin-user-create'])->name('lazy-admin.user.createdo');
         $router->get('users/update/{id}', "UserController@update")->middleware(['permission:admin-user-update'])->name('lazy-admin.user.update');
         $router->post('users/updatedo', "UserController@updateDo")->middleware(['permission:admin-user-update'])->name('lazy-admin.user.updatedo');
         $router->delete('users/delete/{id}', "UserController@delete")->middleware(['permission:admin-user-delete'])->name('lazy-admin.user.delete');
         // 菜单管理管理
-        $router->get('menu', "MenuController@index")->middleware(['permission:admin-menu-index'])->name('lazy-admin.menu.index');
+        $router->get('menu', "MenuController@index")->middleware(["permission:admin-menu-index"])->name('lazy-admin.menu.index');
         $router->get('menu/create', "MenuController@create")->middleware(['permission:admin-menu-create'])->name('lazy-admin.menu.create');
         $router->post('menu/createdo', "MenuController@createDo")->middleware(['permission:admin-menu-create'])->name('lazy-admin.menu.createdo');
         $router->get('menu/update/{id}', "MenuController@update")->middleware(['permission:admin-menu-update'])->name('lazy-admin.menu.update');

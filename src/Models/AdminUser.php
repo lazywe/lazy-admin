@@ -9,6 +9,8 @@ class AdminUser extends Authenticatable
 {
     use HasRoles, Connection;
 
+    public $guard_name = 'lazy-admin';
+
     // ...
     protected $fillable = [
         'name',

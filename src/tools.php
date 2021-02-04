@@ -1,5 +1,7 @@
 <?php
 
+use Lazy\Admin\Guard;
+
 if (!function_exists('lazy_asset')) {
 
     /**
@@ -80,5 +82,18 @@ if (!function_exists('ajaxReturn')) {
                 'data'   => $data,
             ]
         );
+    }
+}
+
+if (!function_exists('adminUser')) {
+
+    /**
+     * 后台用户
+     *
+     * @return void
+     */
+    function lazyAdminUser()
+    {
+        return auth(Guard::ADMIN_GUARD)->user();
     }
 }

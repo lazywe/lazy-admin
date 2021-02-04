@@ -4,6 +4,7 @@ namespace Lazy\Admin\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Lazy\Admin\Guard;
 use Lazy\Admin\Models\AuthLog as ModelsAuthLog;
 
 class AuthLog
@@ -18,7 +19,7 @@ class AuthLog
      */
     public function handle($request, Closure $next)
     {
-        $guardName = config('lazy-admin.guard_name');
+        $guardName = Guard::ADMIN_GUARD;
         $uri = $request->path();
         $ip = $request->getClientIp();
         $method = $request->method();
