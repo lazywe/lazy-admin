@@ -17,7 +17,8 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guest()) {
+        $guardName = config('lazy-admin.guard_name');
+        if (Auth::guard($guardName)->guest()) {
             return redirect()->route('lazy-admin.login');
         }
 

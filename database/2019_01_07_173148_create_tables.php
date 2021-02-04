@@ -12,19 +12,21 @@ class CreateTables extends Migration
      */
     public function up()
     {
+        $tableNames = config('lazy-admin.table_names');
         // 创建后台用户表
-        Schema::create('admin_users', function (Blueprint $table) {
+        Schema::create($tableNames['user'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('guard_name');
             $table->string('password');
             $table->rememberToken();
 
             $table->timestamps();
         });
         // 创建目录表
-        Schema::create('menus', function (Blueprint $table) {
+        Schema::create($tableNames['menu'], function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->default(0);
             $table->integer('order')->default(0);
@@ -36,7 +38,7 @@ class CreateTables extends Migration
             $table->timestamps();
         });
         // 创建日志表
-        Schema::create('admin_auth_log', function (Blueprint $table) {
+        Schema::create($tableNames['log'], function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->default(0);
             $table->string('ip', 15);
@@ -55,7 +57,9 @@ class CreateTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_users');
-        Schema::dropIfExists('menus');
+        $tableNames = config('lazy-admin.table_names');
+        Schema::dropIfExists($tableNames['user']);
+        Schema::dropIfExists($tableNames['menu']);
+        Schema::dropIfExists($tableNames['log']);
     }
 }

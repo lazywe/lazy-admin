@@ -8,8 +8,6 @@ class AuthLog extends Model
 {
     use Connection;
 
-    public $table = 'admin_auth_log';
-
     protected $casts = [
         'params' => 'array'
     ];
@@ -32,5 +30,15 @@ class AuthLog extends Model
     public function user()
     {
         return $this->belongsTo(AdminUser::class, 'user_id', 'id');
+    }
+
+    /**
+     * 自定义table
+     *
+     * @return void
+     */
+    protected function getCustomTableName()
+    {
+        return config("lazy-admin.table_names.log");
     }
 }

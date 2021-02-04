@@ -24,13 +24,7 @@ $ composer require lazywe/lazy-admin -vvv
 - 修改config/auth.php
 
 ````
-    // defaults.guard 修改如下
-    'defaults' => [
-        'guard' => 'lazy-admin',
-        'passwords' => 'users',
-    ]
-
-    // guards 新增如下
+    // guards 新增如下 guards名字应与lazy-admin.guard_name一致，否则无法使用
     'lazy-admin' => [
         'driver'   => 'session',
         'provider' => 'lazy-admin',
@@ -71,20 +65,64 @@ $ php7 artisan lazy-admin:db
 
 # Usage
 
-- 打开地址 http://localhost/admin
+- 打开地址 http://localhost/admin 
 - 用户名 admin@gmail.com
 - 密码 123456
+- 注意：
+- <font style="font-size:14px" color="red">后台入口前缀可以更改``lazy-admin.prefix``</font>
+-    <font style="font-size:14px" color="red">所有后台路由需要使用``route()``方法，否则后台路由 ``前缀`` 可能无法动态更换</font>
+
+### 权限验证中间件 
+- lazy-admin
+- <font style="font-size:20px" color="red">注意：所有需要权限验证的路由需要使用``lazy-admin``中间件，否则...</font>
+
+### 后台权限组： <font style="font-size:20px" color="yellow">App\Providers\RouteServiceProvider::class</font> 文件新增如下
+
+```php
+<?php
+
+    //... 
 
 
-#### 路由权限完全遵循 larave-premission
+    /**
+     * Define the routes for the application.
+     */
+    public function map()
+    {
+        //...
+        //加载后台权限组
+        $this->mapAdminRoutes();
+    }
+    
+    /**
+     * 加载后台权限组
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::prefix(config('lazy-admin.prefix'))
+            ->middleware('web', 'lazy-admin')
+            ->namespace(sprintf("%s\Admin", $this->namespace)) 
+            ->group(function ($router) {
+                // 后台路由文件在routes下的admin目录下 路由文件分组
+                foreach (glob(base_path('routes/admin') . '/*.php') as $file) {
+                    $router->group([], $file);
+                }
+            });
+    }
+
+    // ...
+
+```
+
+### 路由权限完全遵循 larave-premission
 - [前往查看](https://github.com/spatie/laravel-permission)
 
 
-#### 模版 layout
+### 模版 layout
 
-- 建议看resources
+- 后台公用layout
 
-````
+```php
     // layout
     @extends('lazy-view::layout')
     @section('content')
@@ -100,4 +138,6 @@ $ php7 artisan lazy-admin:db
     @push('scripts')
         // ... 自定义
     @endpush
-````
+```
+
+- 模版其他详细功能建议看resources
