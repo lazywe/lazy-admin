@@ -45,6 +45,7 @@
     <script src="{{ lazy_asset('js/jquery.min.js') }}"></script>
     <script src="{{ lazy_asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ lazy_asset('js/plugins/layer/layer.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/main.js') }}"></script>
 </body>
