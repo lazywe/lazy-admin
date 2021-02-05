@@ -26,6 +26,16 @@ $(function () {
         "progressBar": true
     }
 
+    var index;
+    $(document).ajaxStart(function(){
+        index = layer.msg('加载中', {icon: 16,shade: 0.01});
+    });
+    $(document).ajaxComplete(function(){
+        if (index != undefined) {
+            layer.close(index)
+        }
+    });
+
     /**
      * 确认弹出框
      *
