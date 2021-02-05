@@ -9,37 +9,31 @@
                 <h5>管理员</h5>
             </div>
             <div class="ibox-content">
+                <form action="{{route('lazy-admin.user.index')}}">
                 <div class="row">
-                    @can('admin-user-create')
-                    <div class="col-sm-3 width-auto">
-                        <button type="submit"  class="btn btn-sm btn-primary" onclick="location.href='{{ route('lazy-admin.user.create') }}'"> 添加</button> 
+                    @lazy_can('admin-user-create')
+                    <div class="col-sm-2 width-auto">
+                        <button type="button"  class="btn btn-sm btn-primary" onclick="location.href='{{ route('lazy-admin.user.create') }}'"> 添加</button>
                     </div>
-                    @endcan
-                    <form action="{{route('lazy-admin.user.index')}}">
-                    <div class="ibox-tools">
-                        <div class="col-sm-2 width-auto p-4">
-                            <div class="input-group">
-                                <input type="text" name="name" value="{{app('request')->name??''}}" placeholder="请输入名称" class="input-sm form-control"> 
-                            </div>
+                    @end_lazy_can
+                    <div class="col-sm-2 m-b-xs">
+                        <input type="text" name="name" value="{{app('request')->name??''}}" placeholder="请输入名称" class="form-control">
+                    </div>
+                    <div class="col-sm-2 m-b-xs">
+                        <input type="text" name="email"  value="{{app('request')->email??''}}" placeholder="请输入邮箱" class="form-control">
+                    </div>
+                    <div class="col-sm-2 width-auto">
+                        <div class="btn-group btn-group-sm">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <button type="button" onclick="location.href='{{route('lazy-admin.user.index')}}'" class="btn btn-warning">
+                                <i class="fa fa-undo"></i>
+                            </button>
                         </div>
-                        <div class="col-sm-2 width-auto p-4">
-                            <div class="input-group">
-                                <input type="text" name="email"  value="{{app('request')->email??''}}" placeholder="请输入邮箱" class="input-sm form-control"> 
-                            </div>
-                        </div>
-                        <div class="col-sm-2 width-auto">
-                            <div class="btn-group btn-group-sm">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <button type="button" onclick="location.href='{{route('lazy-admin.user.index')}}'" class="btn btn-warning">
-                                    <i class="fa fa-undo"></i>
-                                </button>
-                            </div>
-                        </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -61,24 +55,27 @@
                                 <td>{{ $v->created_at }}</td>
                                 <td>{{ $v->updated_at }}</td>
                                 <td>
-                                    
-                                        @can('admin-user-update')
+
+                                        @lazy_can('admin-user-update')
                                         <a class="btn btn-sm btn-primary" href="{{ route('lazy-admin.user.update', ['id'=>$v->id]) }}">
                                             <i class="fa fa-lg fa-edit"></i>&nbsp;修改
                                         </a>
-                                        @endcan
-                                    @if($v->id !=1 ) 
-                                        @can('admin-user-delete')
+                                        @end_lazy_can
+                                    @if($v->id !=1 )
+                                        @lazy_can('admin-user-delete')
                                         <a href="javascript:;" class="btn btn-sm btn-danger operation-confirm-btn" data-method="delete" data-url="{{ route('lazy-admin.user.delete', ['id'=>$v->id]) }}" data-confirm-info="确认删除吗？">
                                             <i class="fa fa-lg fa-trash"></i>&nbsp;删除
                                         </a>
-                                        @endcan
+                                        @end_lazy_can
                                     @endif
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <div>
+                        {{ $list->appends(request()->except('s'))->links() }}
+                    </div>
                 </div>
 
             </div>

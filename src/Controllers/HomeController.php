@@ -4,6 +4,7 @@ namespace Lazy\Admin\Controllers;
 
 use Lazy\Admin\Models\Menus;
 use Illuminate\Support\Facades\Auth;
+use Lazy\Admin\Guard;
 
 class HomeController extends Controller
 {
@@ -28,11 +29,12 @@ class HomeController extends Controller
      */
     public function menuTree($menus, $pid = 0)
     {
+        $guardName = Guard::ADMIN_GUARD;
         $arrs = [];
         foreach ($menus as $v) {
             // 是否有权限， 个别权限可以无限制访问
-            if (!Auth::user()->hasAnyRole(config("lazy-admin.super-role", "administrator"))) {
-                if (!Auth::user()->hasAnyRole(explode(',', $v['roles']))) {
+            if (!Auth::guard($guardName)->user()->hasAnyRole(config("lazy-admin.super-role", "administrator"))) {
+                if (!Auth::guard($guardName)->user()->hasAnyRole(explode(',', $v['roles']))) {
                     continue;
                 }
             }

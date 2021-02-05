@@ -9,7 +9,7 @@ class AdminUser extends Authenticatable
 {
     use HasRoles, Connection;
 
-    protected $table = 'admin_users';
+    public $guard_name = 'lazy-admin';
 
     // ...
     protected $fillable = [
@@ -17,8 +17,19 @@ class AdminUser extends Authenticatable
         'email',
         'email_verified_at',
         'password',
+        'guard_name',
         'remember_token',
         'created_at',
         'updated_at'
     ];
+
+    /**
+     * 自定义table
+     *
+     * @return void
+     */
+    protected function getCustomTableName()
+    {
+        return config("lazy-admin.table_names.user");
+    }
 }

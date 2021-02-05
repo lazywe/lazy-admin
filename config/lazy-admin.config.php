@@ -36,6 +36,14 @@ return [
     'connection' => "mysql",
 
     /**
+     * 自定义table名字
+     */
+    'table_names' => [
+        "user" => "admin_users", // 后台用户名字
+        "log"  => "admin_auth_log", // 后台日志名
+        "menu"  => "admin_menus" // 后台栏目名字
+    ],
+    /**
      * cdn更新
      */
     'timestamp' => "2019070069",

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <title>{{config('lazy-admin.name')}}</title>
@@ -13,14 +13,14 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
     <link rel="shortcut icon" href="{{ lazy_asset('img/favicon.ico') }}">
-    <link href="{{ lazy_asset('css/bootstrap.min14ed.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/font-awesome.min93e3.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/style.min862f.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/bootstrap.min14ed.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/font-awesome.min93e3.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/animate.min.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/style.min862f.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
     <script>
         window.DEBUG = "{{ env('APP_DEBUG', false) }}";
-        window.FormToken = "{{ csrf_token() }}"; 
+        window.FormToken = "{{ csrf_token() }}";
     </script>
 </head>
 
@@ -36,7 +36,7 @@
                         <div class="dropdown profile-element">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                                    <span class="text-muted text-xs block">{{ Auth::user()->name }}<b class="caret"></b></span>
+                                    <span class="text-muted text-xs block">{{ lazyAdminUser()->name }}<b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -56,7 +56,7 @@
                     </li>
                     @foreach ($menus as $first)
                     <li>
-                        <a class="{{count($first['son'])>0?'':'J_menuItem' }}" href="{{ lazy_url($first['uri']) }}">
+                        <a class="{{count($first['son'])>0?'':'J_menuItem' }} {{md5(lazy_url($first['uri']))}}" href="{{ lazy_url($first['uri']) }}">
                             <i class="fa {{ $first['icon'] }}"></i>
                             <span class="nav-label">{{$first['title']}}</span>
                             @if (count($first['son'])>0)
@@ -67,8 +67,7 @@
                         <ul class="nav nav-second-level">
                             @foreach ($first['son'] as $second)
                             <li>
-                                <a class="{{count($second['son'])>0?'':'J_menuItem' }}" href="{{ lazy_url($second['uri']) }}">
-                                    <i class="fa {{$second['icon']}}"></i>
+                                <a class="{{count($second['son'])>0?'':'J_menuItem' }} {{md5(lazy_url($second['uri']))}}" href="{{ lazy_url($second['uri']) }}">
                                     <span class="nav-label">{{$second['title']}}</span>
                                     @if (count($second['son']) >0)
                                     <span class="fa arrow"></span>
@@ -78,7 +77,7 @@
                                 <ul class="nav nav-third-level">
                                     @foreach ($second['son'] as $third)
                                     <li>
-                                        <a class="J_menuItem" href="{{ lazy_url($third['uri']) }}">{{$third['title']}}</a>
+                                        <a class="J_menuItem {{md5(lazy_url($third['uri']))}}" href="{{ lazy_url($third['uri']) }}">{{$third['title']}}</a>
                                     </li>
                                     @endforeach
                                 </ul>
@@ -139,7 +138,7 @@
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{ route(config('lazy-admin.index')) }}" data-id="{{ route(config('lazy-admin.index')) }}" frameborder="0" seamless></iframe>
             </div>
             <div class="footer">
-                <div class="pull-right">&copy; 2019-2029 
+                <div class="pull-right">&copy; 2019-2029
                 </div>
             </div>
         </div>
@@ -222,15 +221,53 @@
             </div>
         </div>
     </div>
-    <script src="{{ lazy_asset('js/jquery.min.js?v=2.1.4') }}"></script>
-    <script src="{{ lazy_asset('js/bootstrap.min.js?v=3.3.6') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/layer/layer.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/hplus.min.js?v=4.1.0') }}"></script>
-    <script src="{{ lazy_asset('js/contabs.min.js?t=1.0.2') }}"></script>
+    <script src="{{ lazy_asset('js/jquery.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/bootstrap.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/plugins/metisMenu/jquery.metisMenu.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/plugins/layer/layer.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/hplus.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/contabs.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/plugins/pace/pace.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}"></script>
-    <script src="{{ lazy_asset('js/main.js') }}"></script>
+    <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/md5.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/base64.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/main.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
 </body>
 </html>
+<script>
+    $(function(){
+        /** 跳转hash */
+        setTimeout(() => {
+            try {
+                var base64Code = (window.location.hash).substr(1);
+                if (base64Code == "") {
+                    return false;
+                }
+                var url =  $.base64.decode(base64Code);
+                var currentUrl = window.location.protocol + "//" +window.location.host + window.location.pathname
+                if (currentUrl == url) {
+                    return false;
+                }
+                var hash = $.md5(url);
+                document.location.hash = "";
+                var menuDom = $('.'+hash);
+                if (menuDom.length>0) {
+                    menuDom.find('span').trigger('click');
+                    menuDom.parents('ul').siblings("a").trigger('click')
+                } else {
+                    var tdom = '<li><a class="J_menuItem '+hash+'" style="display:none;" href="'+url+'" data-index="998">\
+                                    <span class="nav-label">上一次打开</span>\
+                                </a></li>';
+                    $("#side-menu").append(tdom);
+                    var tmenuDom = $('.'+hash);
+                    tmenuDom.find('span').trigger('click');
+                    tmenuDom.remove();
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }, 200);
+    })
+</script>

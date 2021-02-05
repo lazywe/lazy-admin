@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <title>{{config('lazy-admin.name')}}</title>
@@ -20,9 +20,15 @@
     @stack('css')
     <script>
         window.DEBUG = "{{ env('APP_DEBUG', false) }}";
-        window.FormToken = "{{ csrf_token() }}"; 
+        window.FormToken = "{{ csrf_token() }}";
         window.Referer = "{!! app('url')->previous() !!}"
         window.AdminHome = "/{{ config('lazy-admin.prefix') }}"
+        // 首次加载记录referer， 若刷新了页面用之前的referer
+        if (window.performance.navigation.type == 0) {
+            sessionStorage.setItem("Referer", Referer)
+        } else {
+            Referer = sessionStorage.getItem("Referer")
+        }
     </script>
 </head>
 <body class="gray-bg">
@@ -39,6 +45,7 @@
     <script src="{{ lazy_asset('js/plugins/pace/pace.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/content.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/main.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     @stack('scripts')
 </body>

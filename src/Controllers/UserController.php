@@ -75,7 +75,6 @@ class UserController extends Controller
                 if (!$user) {
                     throw new \Exception('添加失败,请重试.');
                 }
-                // dd($roles);
                 // 分配角色
                 $result = $user->assignRole($roles);
                 if (!$result) {

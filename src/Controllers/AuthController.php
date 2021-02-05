@@ -5,6 +5,7 @@ namespace Lazy\Admin\Controllers;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Lazy\Admin\Guard;
 
 class AuthController extends Controller
 {
@@ -41,8 +42,16 @@ class AuthController extends Controller
             $errors = $validator->errors();
             return ajaxReturn(0, $errors->first());
         }
-        if (Auth::attempt($credentials)) {
-            return ajaxReturn(1, '成功', ['url'=>route('lazy-admin.home')]);
+        $guardName = Guard::ADMIN_GUARD;
+        if (Auth::guard($guardName)->attempt($credentials)) {
+            // 跳回判断
+            $previousUrl = $request->session()->get('previous_url');
+            $url = route('lazy-admin.home');
+            if (!empty($previousUrl)) {
+                $request->session()->forget('previous_url');
+                $url = sprintf("%s#%s", $url, base64_encode($previousUrl));
+            }
+            return ajaxReturn(1, '成功', ['url'=>$url]);
         } else {
             return ajaxReturn(0, '账号密码错误,请重试.');
         }
@@ -57,7 +66,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            Auth::logout();
+            $guardName = Guard::ADMIN_GUARD;
+            Auth::guard($guardName)->logout();
             return ajaxReturn(1, '退出成功', ['url'=>route('lazy-admin.home')]);
         } catch (\Exception $e) {
         }

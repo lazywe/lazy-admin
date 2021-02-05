@@ -10,11 +10,11 @@
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    @can('admin-permission-create')
+                    @lazy_can('admin-permission-create')
                     <div class="col-sm-3 width-auto">
-                        <button type="submit"  class="btn btn-sm btn-primary" onclick="location.href='{{ route('lazy-admin.permission.create') }}'"> 添加</button> 
+                        <button type="submit"  class="btn btn-sm btn-primary" onclick="location.href='{{ route('lazy-admin.permission.create') }}'"> 添加</button>
                     </div>
-                    @endcan
+                    @end_lazy_can
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -37,16 +37,16 @@
                                 <td>{{ $v->created_at }}</td>
                                 <td>{{ $v->updated_at }}</td>
                                 <td>
-                                    @can('admin-permission-update')
+                                    @lazy_can('admin-permission-update')
                                     <a class="btn btn-sm btn-primary" href="{{ route('lazy-admin.permission.update', ['id'=>$v->id]) }}">
                                         <i class="fa fa-lg fa-edit"></i>&nbsp;修改
                                     </a>
-                                    @endcan
-                                    @can('admin-permission-delete')
+                                    @end_lazy_can
+                                    @lazy_can('admin-permission-delete')
                                     <a href="javascript:;" class="btn btn-sm btn-danger operation-confirm-btn" data-method="delete" data-url="{{ route('lazy-admin.permission.delete', ['id'=>$v->id]) }}" data-confirm-info="确认删除吗？">
                                         <i class="fa fa-lg fa-trash"></i>&nbsp;删除
                                     </a>
-                                    @endcan
+                                    @end_lazy_can
                                 </td>
                             </tr>
                             @endforeach

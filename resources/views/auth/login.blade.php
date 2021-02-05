@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>{{ config("lazy-admin.name") }}</title>
     <meta name="keywords" content="{{ config("lazy-admin.name") }}">
     <meta name="description" content="{{ config("lazy-admin.name") }}">
@@ -16,11 +16,11 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
     <script>
-      if (window.top !== window.self) { 
+      if (window.top !== window.self) {
         window.top.location = window.location;
-      } 
-      window.DEBUG = "{{ env('APP_DEBUG', false) }}"; 
-      window.FormToken = "{{ csrf_token() }}"; 
+      }
+      window.DEBUG = "{{ env('APP_DEBUG', false) }}";
+      window.FormToken = "{{ csrf_token() }}";
     </script>
 </head>
 
@@ -45,6 +45,7 @@
     <script src="{{ lazy_asset('js/jquery.min.js') }}"></script>
     <script src="{{ lazy_asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/main.js') }}"></script>
 </body>
 </html>

@@ -10,11 +10,17 @@
             </div>
             <div class="ibox-content">
                 <div class="row">
-                    @can('admin-menu-create')
+                    @lazy_can('admin-menu-create')
                     <div class="col-sm-3 width-auto">
-                        <button type="submit"  class="btn btn-sm btn-primary" onclick="location.href='{{ route('lazy-admin.menu.create') }}'"> 添加</button> 
+                        <button
+                            type="submit"
+                            class="btn btn-sm btn-primary"
+                            onclick="location.href='{{ route('lazy-admin.menu.create') }}'"
+                        >
+                         添加
+                        </button>
                     </div>
-                    @endcan
+                    @end_lazy_can
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -36,14 +42,14 @@
                                 <td>{!!str_repeat("&nbsp;&nbsp;&nbsp;", $v['level'])!!}{{ $v['title'] }}</td>
                                 <td>
                                     @if(!empty($v['uri']))
-                                        {{ $v['uri'] }}    
+                                        {{ $v['uri'] }}
                                     @else
                                         -
                                     @endif
                                 </td>
                                 <td>
                                     @if(!empty($v['icon']))
-                                    <i class="fa {{ $v['icon'] }}"></i>    
+                                    <i class="fa {{ $v['icon'] }}"></i>
                                     @else
                                         -
                                     @endif
@@ -52,17 +58,17 @@
                                 <td>{{ $v['updated_at'] }}</td>
                                 <td>
 
-                                    @can('admin-menu-update')
+                                    @lazy_can('admin-menu-update')
                                     <a class="btn btn-sm btn-primary" href="{{ route('lazy-admin.menu.update', ['id'=>$v['id']]) }}">
                                         <i class="fa fa-lg fa-edit"></i>&nbsp;修改
                                     </a>
-                                    @endcan
+                                    @end_lazy_can
 
-                                    @can('admin-menu-delete')
+                                    @lazy_can('admin-menu-delete')
                                     <a href="javascript:;" class="btn btn-sm btn-danger operation-confirm-btn" data-method="delete" data-url="{{ route('lazy-admin.menu.delete', ['id'=>$v['id']]) }}" data-confirm-info="确认删除吗？">
                                         <i class="fa fa-lg fa-trash"></i>&nbsp;删除
                                     </a>
-                                    @endcan
+                                    @end_lazy_can
                                 </td>
                             </tr>
                             @endforeach

@@ -1,19 +1,17 @@
 /**
  * 公用自定义js
  */
-$(function() {
+$(function () {
 
     /**
      * debug
      */
     var debug = DEBUG;
 
-    /**
-     * 禁止多次ajax处理
-     */
-    var submitStatus = false;
-
-    var ajaxState = false;
+    // 打开vconsole
+    if (debug) {
+        new VConsole();
+    }
 
     // 配置toast提示框
     toastr.options = {
@@ -21,34 +19,41 @@ $(function() {
         "debug": false,
         "positionClass": "toast-top-right",
         "onclick": null,
-        "showDuration": "800",
-        "hideDuration": "800",
-        "timeOut": "1000",
+        "showDuration": "1500",
+        "hideDuration": "1500",
+        "timeOut": "1500",
         "extendedTimeOut": "200",
         "progressBar": true
     }
 
     /**
      * 确认弹出框
-     * 
+     *
      * @param string   info    提示信息
      * @param function trueFun 正确回掉函数
      * @param function cancelFun 取消回掉函数
      * @param string   title   提示头
      */
-    $.confirm = function(info, trueFun, cancelFun, title) {
+    $.confirm = function (info, trueFun, cancelFun, title) {
         typeof info == "undefined" ? info = "确认这样操作吗？" : ""
         typeof title == "undefined" ? title = "提示信息" : ""
 
+        var subConfirm = false;
         //询问框
         var main = layer.confirm(info, {
             btn: ['确认', '取消'], //按钮
             skin: 'layui-layer-molv',
             title: title
-        }, function() {
+        }, function () {
+            if (subConfirm == true) {
+                return false;
+            }
+            subConfirm = true;
             layer.close(main)
             typeof trueFun == "function" && trueFun();
-        }, function() {
+            // 2秒后解除请求限制
+            setTimeout(() => {subConfirm = false}, 2000);
+        }, function () {
             layer.close(main)
             typeof cancelFun == "function" && cancelFun();
         });
@@ -56,22 +61,28 @@ $(function() {
 
     /**
      * 确认输入弹出框
-     * 
+     *
      * @param string   info    提示信息
      * @param function trueFun 正确回掉函数
      */
-    $.prompt = function(info, trueFun) {
+    $.prompt = function (info, trueFun) {
         typeof info == "undefined" ? info = "输入内容，并确认" : ""
+        var subPrompt = false;
         var promptindex = layer.prompt({
-            title: info, 
+            title: info,
             formType: 2
-        }, function(text){
+        }, function (text) {
+            if (subPrompt == true) {
+                return false;
+            }
+            subPrompt = true;
             layer.close(promptindex);
             typeof trueFun == "function" && trueFun(text);
+            setTimeout(() => {subPrompt = false}, 2000);
         });
     }
 
-    $('body').off('click', '.batch-checkbox-all').on('click', '.batch-checkbox-all', function(){
+    $('body').off('click', '.batch-checkbox-all').on('click', '.batch-checkbox-all', function () {
         var t = $(this)
         if (t.is(":checked")) {
             $(".batch-checkbox").prop("checked", true)
@@ -83,7 +94,7 @@ $(function() {
     /**
      * 批量操作
      */
-    $('body').on('click', '.batch-confirm-btn', function() {
+    $('body').on('click', '.batch-confirm-btn', function () {
         var self = $(this)
         var info = self.attr('data-confirm-info');
         var url = self.attr('data-url');
@@ -92,7 +103,7 @@ $(function() {
         // 批量数据获取
         try {
             var batchDom = $(".batch-checkbox")
-            batchDom.each(function() {
+            batchDom.each(function () {
                 var t = $(this);
                 if (t.is(":checked")) {
                     var data = t.attr("data-batch");
@@ -122,9 +133,9 @@ $(function() {
         }
         var data = { data: batch_data };
         // 绑定事件
-        $.confirm(info, function() {
+        $.confirm(info, function () {
             $.ajaxRequest(url, data, method, trueFun);
-        }, function() {
+        }, function () {
             typeof cancelfun == "function" && cancelfun(self)
         })
     })
@@ -132,9 +143,9 @@ $(function() {
     /**
      * 执行fun版本
      */
-    $('body').on('click', '.operation-fun-btn', function() {
+    $('body').on('click', '.operation-fun-btn', function () {
         var self = $(this)
-            // 回掉函数异常
+        // 回掉函数异常
         try {
             var fun = eval(self.attr('data-fun'));
             typeof fun == "function" && fun(self)
@@ -146,7 +157,7 @@ $(function() {
     /**
      * 切换弹出选择列表
      */
-    $('body').on('click', '.operation-selected-btn', function(e) {
+    $('body').on('click', '.operation-selected-btn', function (e) {
         e.stopPropagation(); //  阻止事件冒泡
         var self = $(this)
         try {
@@ -155,9 +166,9 @@ $(function() {
             var top = popover.offset().top;
             if (parseInt(top) < 50) {
                 var pt = self.parents().offset().top
-                popover.css("bottom", -(parseInt(pt/2)))
+                popover.css("bottom", -(parseInt(pt / 2)))
             } else {
-                popover.css({"bottom":"-8"})
+                popover.css({ "bottom": "-8" })
             }
         } catch (error) {
         }
@@ -165,7 +176,7 @@ $(function() {
 
     /**
      * 询问提示按钮
-     * 
+     *
      * 如下自定义属性
      * data-confirm-info  询问信息
      * data-url           点击确认请求地址
@@ -173,7 +184,7 @@ $(function() {
      * data-truefun       自定义ajax成功回掉函数
      * data-cancelfun     自定义取消回掉函数
      */
-    $('body').on('click', '.operation-confirm-btn', function() {
+    $('body').on('click', '.operation-confirm-btn', function () {
         var self = $(this)
         var info = self.attr('data-confirm-info');
         var url = self.attr('data-url');
@@ -189,7 +200,6 @@ $(function() {
             var trueFun = eval(self.attr('data-truefun'));
             var cancelfun = eval(self.attr('data-cancelfun'));
         } catch (error) {
-
         }
 
         try {
@@ -201,17 +211,130 @@ $(function() {
         }
 
         // 绑定事件
-        $.confirm(info, function() {
+        $.confirm(info, function () {
             $.ajaxRequest(url, data, method, trueFun);
-        }, function() {
+        }, function () {
             typeof cancelfun == "function" && cancelfun(self)
         })
+    })
+
+
+    /**
+     * 询问确认提示按钮
+     *
+     * 如下自定义属性
+     * data-confirm-info  询问信息
+     * data-url           点击确认请求地址
+     * data-method        请求类型
+     * data-truefun       自定义ajax成功回掉函数
+     * data-cancelfun     自定义取消回掉函数
+     */
+    $('body').on('click', '.operation-confirm-two-btn', function () {
+        var self = $(this)
+        var info = self.attr('data-confirm-info');
+        var url = self.attr('data-url');
+        var method = self.attr('data-method');
+
+        // 未定义请求地址
+        if (typeof url != 'string') {
+            console.error('未定义请求地址(data-url)');
+            return
+        }
+        var data = {};
+        try {
+            var trueFun = eval(self.attr('data-truefun'));
+        } catch (error) {
+        }
+
+        try {
+            var params = self.attr('data-params');
+            if (params != "") {
+                data = JSON.parse(params);
+            }
+        } catch (error) {
+        }
+
+        var content = '<input placeholder="请输入“确认”，防止误操作" class="input-sm form-control input-s-sm inline confirm-dom confirm-t"/>';
+        // 绑定事件
+        layer.open({
+            skin: 'layui-layer-molv',
+            title: info,
+            btn: ['确认', '取消'], //按钮
+            content: content,
+            yes:function (index) {
+                var confirmInfo = $(".confirm-t").val()
+                if (confirmInfo != '确认') {
+                    toastr.error("二次确认不正确~");
+                    return false;
+                }
+                $.ajaxRequest(url, data, method, trueFun);
+                layer.close(index);
+            }
+        });
+    })
+
+    /**
+     * 询问提示输入按钮
+     *
+     * 如下自定义属性
+     * data-confirm-info  询问信息
+     * data-url           点击确认请求地址
+     * data-method        请求类型
+     * data-truefun       自定义ajax成功回掉函数
+     * data-cancelfun     自定义取消回掉函数
+     */
+    $('body').on('click', '.prompt-confirm-btn', function () {
+        var self = $(this)
+        var info = self.data('confirm-info');
+        var url = self.data('url');
+        var method = self.data('method');
+        var prompt = self.data('prompt');
+        var dvalue = self.data('default');
+
+        // 未定义请求地址
+        if (typeof url != 'string') {
+            console.error('未定义请求地址(data-url)');
+            return
+        }
+        // 未定义请求地址
+        if (typeof prompt != 'string') {
+            console.error('未定义请求地址(data-prompt)');
+            return
+        }
+        var data = {};
+        try {
+            var trueFun = eval(self.attr('data-truefun'));
+        } catch (error) {
+        }
+
+        try {
+            var params = self.attr('data-params');
+            if (params != "") {
+                data = JSON.parse(params);
+            }
+        } catch (error) {
+            data = {};
+        }
+        //默认prompt
+        layer.prompt(
+            {
+                title:info,
+                value:dvalue,
+                class:'form-control',
+                skin: 'layui-layer-molv',
+            },
+            function(value, index) {
+                data[prompt] = value
+                $.ajaxRequest(url, data, method, trueFun);
+                layer.close(index);
+            }
+        );
     })
 
     /**
      * 提交
      */
-    $('body').on('click', '.btn-submit', function() {
+    $('body').on('click', '.btn-submit', function () {
         var t = $(this);
         $.submit(t);
     })
@@ -219,7 +342,7 @@ $(function() {
     /**
      * 提交
      */
-    $('body').on('click', '.btn-submit-confirm', function() {
+    $('body').on('click', '.btn-submit-confirm', function () {
         var t = $(this);
         try {
             var info = t.attr('data-confirm-info');
@@ -227,12 +350,18 @@ $(function() {
             console.error('data-confirm-info 未定义');
             return false;
         }
-        $.confirm(info, function() {
+        $.confirm(info, function () {
             $.submit(t);
         })
     })
 
+    var sub = false
+    // 提交表单
     $.submit = function (t) {
+        if (sub == true) {
+            return false;
+        }
+        sub = true
         var form = t.parents('form:first');
         var data = form.serialize();
         var url = form.attr('action');
@@ -243,13 +372,15 @@ $(function() {
         var method = form.attr('method');
         try {
             var fun = eval(form.attr('data-fun'))
-        } catch (error) {}
+        } catch (error) { }
         $.ajaxRequest(url, data, method, fun)
+        // 2秒后解除请求限制
+        setTimeout(() => {sub = false}, 2000);
     }
 
     /**
      * 询问提示按钮,切输入驳回信息
-     * 
+     *
      * 如下自定义属性
      * data-confirm-info  询问信息
      * data-url           点击确认请求地址
@@ -257,7 +388,7 @@ $(function() {
      * data-truefun       自定义ajax成功回掉函数
      * data-cancelfun     自定义取消回掉函数
      */
-    $('body').on('click', '.operation-prompt-btn', function() {
+    $('body').on('click', '.operation-prompt-btn', function () {
         var self = $(this)
         var info = self.attr('data-title');
         var url = self.attr('data-url');
@@ -286,7 +417,7 @@ $(function() {
         }
 
         // 绑定事件
-        $.prompt(info, function(text) {
+        $.prompt(info, function (text) {
             data['text'] = text
             $.ajaxRequest(url, data, method, trueFun);
         })
@@ -297,11 +428,16 @@ $(function() {
     /**
      * 提交与上传
      */
-    $('body').on('click', '.btn-submit-upload', function() {
+    var subUpload = false
+    $('body').on('click', '.btn-submit-upload', function () {
+        if (subUpload == true) {
+            return false
+        }
+        subUpload = true;
         var t = $(this);
         var form = t.parents('form:first');
         // var data = form.serialize();
-        var formData =  new FormData(form.get(0));
+        var formData = new FormData(form.get(0));
         var url = form.attr('action');
         if (url == '') {
             toastr.error('非法的action');
@@ -310,14 +446,16 @@ $(function() {
         var method = form.attr('method');
         try {
             var fun = eval(form.attr('data-fun'))
-        } catch (error) {}
-        $.ajaxUploadRequest(url,formData,method,fun)
+        } catch (error) { }
+        $.ajaxUploadRequest(url, formData, method, fun)
+        // 2秒后解除请求限制
+        setTimeout(() => {subUpload = false}, 2000);
     })
 
     /**
      * 显示自定义panal
      */
-    $('body').on('click', '.show-panal', function() {
+    $('body').on('click', '.show-panal', function () {
         var t = $(this);
         layer.open({
             type: 1,
@@ -332,17 +470,13 @@ $(function() {
     /**
      * 重新定义ajax
      *
-     * @param string   url     请求地址 
+     * @param string   url     请求地址
      * @param json     data    请求数据,default:{}
      * @param method   method  请求类型,default:get，支持[post,get,put,delete]
      * @param function callback 成功回掉函数
      */
-    $.ajaxRequest = function(url, data, method, callback) {
+    $.ajaxRequest = function (url, data, method, callback) {
         // 防止多次操作ajax
-        if (submitStatus == true) {
-            return
-        }
-        submitStatus = true
         typeof method == 'undefined' ? method = 'get' : "'"
         typeof data == 'undefined' ? data = {} : ""
         if (typeof data == 'object') {
@@ -354,7 +488,7 @@ $(function() {
         }
         if (debug == true) {
             console.info("请求数据:");
-            console.log(data); 
+            console.log(data);
             console.info("请求地址:" + url);
             console.info("请求类型:" + method);
         }
@@ -362,8 +496,8 @@ $(function() {
             method: method,
             url: url,
             data: data,
-            dataType : 'JSON',
-            success: function(data) {
+            dataType: 'JSON',
+            success: function (data) {
                 debug == true && console.info("返回数据:") && console.log(data);
                 if (typeof callback == 'undefined') {
                     if (data.status == 1) {
@@ -371,11 +505,11 @@ $(function() {
                         if (data.data.url != undefined) {
                             var url = window.location.href;
                             if (data.data.url == 'back') {
-                                url = Referer+'#back=-3';
+                                url = Referer + '#back=-3';
                             } else {
                                 url = data.data.url;
                             }
-                            window.location.href = url;
+                            window.location.replace(url);
                         } else {
                             window.location.reload();
                         }
@@ -386,39 +520,34 @@ $(function() {
                     callback(data);
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 debug == true && console.info(data);
                 toastr.error('处理失败，请重试 !');
             },
-            complete: function() {
-                submitStatus = false
+            complete: function () {
             }
         });
     }
 
     /**
 	 * ajax 二次封装
-	 * 
+	 *
 	 * @param string   url      请求地址
 	 * @param string   method   请求类型
 	 * @param object   data     请求数据
 	 * @param function callback 回调函数
 	 */
-	$.ajaxUploadRequest = function(url, data, method, callback){
-		if (ajaxState == true) {
-			return
-		}
-        ajaxState = true
+    $.ajaxUploadRequest = function (url, data, method, callback) {
         data.append('_token', FormToken);
-		debug && console.info(data)
-		var ajaxTimeoutTest = $.ajax({
-			type:method,
-			url:url,
-			data:data,
-			processData:false,
-			contentType:false,
-			dataType:'json',
-			success:function(data){
+        debug && console.info(data)
+        var ajaxTimeoutTest = $.ajax({
+            type: method,
+            url: url,
+            data: data,
+            processData: false,
+            contentType: false,
+            dataType: 'json',
+            success: function (data) {
                 debug == true && console.info("返回数据:") && console.log(data);
                 if (typeof callback == 'undefined') {
                     if (data.status == 1) {
@@ -426,37 +555,36 @@ $(function() {
                         if (data.data.url != undefined) {
                             var url = window.location.href;
                             if (data.data.url == 'back') {
-                                url = Referer+'#back=-3';
+                                url = Referer + '#back=-3';
                             } else {
                                 url = data.data.url;
                             }
-                            window.location.href = url;
+                            window.location.replace(url);
                         } else {
                             window.location.reload();
                         }
-                        
+
                     } else {
                         toastr.error(data.info);
                     }
                 } else {
                     callback(data);
                 }
-			},
-			error:function(){
-				toastr.error("操作失败，请重试~");
-			},
-			complete :function(XMLHttpRequest,status) { 
-				ajaxState = false
-			}
-		});
-	}
+            },
+            error: function () {
+                toastr.error("操作失败，请重试~");
+            },
+            complete: function (XMLHttpRequest, status) {
+            }
+        });
+    }
 
     /**
      * 顶部提示
      */
-    $.topTip = function (t, info){
+    $.topTip = function (t, info) {
         layer.tips(info, $(t), {
-          tips: [1, '#0FA6D8'] //还可配置颜色
+            tips: [1, '#0FA6D8'] //还可配置颜色
         });
     }
 
@@ -465,57 +593,57 @@ $(function() {
     /**
      * 处理中状态
      */
-    $.startLoad = function() {
+    $.startLoad = function () {
         if (loadStatus == false) {
             loadStatus = true
             $('.sidebar-toggle').after(loadHtml);
         }
     }
-    $.stopLoad = function() {
+    $.stopLoad = function () {
         if (loadStatus == true) {
             loadStatus = false
             $('.loadingDom').remove();
         }
     }
-    $(document).ajaxStart(function() {
+    $(document).ajaxStart(function () {
         $.startLoad();
     })
-    $(document).ajaxStop(function() {
+    $(document).ajaxStop(function () {
         $.stopLoad();
     })
 
-    $.getHashParameters = function ()
-    {
-        var arr = (location.hash || "").replace(/^\#/,'').split("&");
+    $.getHashParameters = function () {
+        var arr = (location.hash || "").replace(/^\#/, '').split("&");
         var params = {};
-        for(var i=0; i<arr.length; i++){
+        for (var i = 0; i < arr.length; i++) {
             var data = arr[i].split("=");
-            if(data.length == 2){
-                 params[data[0]] = data[1];
+            if (data.length == 2) {
+                params[data[0]] = data[1];
             }
         }
         return params;
     }
 
     // 全局返回
-    $('body').on('click', '.history-back', function() {
-        var params = $.getHashParameters();
-        params['back'] != undefined ? history.go(params['back']):history.go(-1)
+    $('body').on('click', '.history-back', function () {
+        history.go(-1)
+        // var params = $.getHashParameters();
+        // params['back'] != undefined ? history.go(params['back']) : history.go(-1)
     })
 
     // 不走前往url
-    $('body').on('click', '.goUrl', function(){
+    $('body').on('click', '.goUrl', function () {
         var url = $(this).attr('url');
-        window.location.href=url;
+        window.location.replace(href);
     })
 
     /**
      * 加载url
      */
-    $.loadUrl = function(url, title){
+    $.loadUrl = function (url, title) {
         layer.open({
             type: 2,
-            title:title,
+            title: title,
             skin: 'layui-layer-molv',
             area: ['60%', '450px'],
             fixed: true, //不固定
@@ -527,19 +655,21 @@ $(function() {
     /**
      * 加载window
      */
-    $.openWindow = function(url, title){
+    $.openWindow = function (url, title, width, height) {
+        if (width == undefined) width = '60%';
+        if (height == undefined) height = '450px';
         layer.open({
             type: 2,
-            title:title,
+            title: title,
             skin: 'layui-layer-molv',
-            area: ['60%', '450px'],
+            area: [width, height],
             fixed: true, //不固定
             maxmin: true,
             content: url,
-          });
+        });
     }
 
-    $('body').on('click', '.open-window', function() {
+    $('body').on('click', '.open-window', function () {
         var t = $(this);
         var url = t.data('url');
         var title = t.data('title');
@@ -547,7 +677,7 @@ $(function() {
     })
 
     // 上传组件
-    $('.upload-dom').each(function(e){
+    $('.upload-dom').each(function (e) {
         var t = $(this);
         var img = t.find('img');
         var file = img.data('file')
@@ -555,12 +685,12 @@ $(function() {
         var btn = img.data('btn')
         var value = img.data('value')
         var html = "<div class='upload-btn'>";
-            html += btn ? btn: "点击上传"
-            html += "<input class='upload-input' type='file' name='" + file + "'>"
-        html += "<input class='upload-input' type='hidden' name='" + name + "' value='" + value +"' >"
-            html += "</div>";
+        html += btn ? btn : "点击上传"
+        html += "<input class='upload-input' type='file' name='" + file + "'>"
+        html += "<input class='upload-input' type='hidden' name='" + name + "' value='" + value + "' >"
+        html += "</div>";
         t.append(html)
-        t.find(".upload-input").change(function(){
+        t.find(".upload-input").change(function () {
             var file = $(this);
             var f = file[0].files[0];
             if (f != undefined) {
