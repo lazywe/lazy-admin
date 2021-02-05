@@ -23,6 +23,12 @@
         window.FormToken = "{{ csrf_token() }}";
         window.Referer = "{!! app('url')->previous() !!}"
         window.AdminHome = "/{{ config('lazy-admin.prefix') }}"
+        // 首次加载记录referer， 若刷新了页面用之前的referer
+        if (window.performance.navigation.type == 0) {
+            sessionStorage.setItem("Referer", Referer)
+        } else {
+            Referer = sessionStorage.getItem("Referer")
+        }
     </script>
 </head>
 <body class="gray-bg">
