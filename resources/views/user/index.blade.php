@@ -9,37 +9,31 @@
                 <h5>管理员</h5>
             </div>
             <div class="ibox-content">
+                <form action="{{route('lazy-admin.user.index')}}">
                 <div class="row">
                     @lazy_can('admin-user-create')
-                    <div class="col-sm-3 width-auto">
-                        <button type="submit"  class="btn btn-sm btn-primary" onclick="location.href='{{ route('lazy-admin.user.create') }}'"> 添加</button>
+                    <div class="col-sm-2 width-auto">
+                        <button type="button"  class="btn btn-sm btn-primary" onclick="location.href='{{ route('lazy-admin.user.create') }}'"> 添加</button>
                     </div>
                     @end_lazy_can
-                    <form action="{{route('lazy-admin.user.index')}}">
-                    <div class="ibox-tools">
-                        <div class="col-sm-2 width-auto p-4">
-                            <div class="input-group">
-                                <input type="text" name="name" value="{{app('request')->name??''}}" placeholder="请输入名称" class="input-sm form-control">
-                            </div>
+                    <div class="col-sm-2 m-b-xs">
+                        <input type="text" name="name" value="{{app('request')->name??''}}" placeholder="请输入名称" class="form-control">
+                    </div>
+                    <div class="col-sm-2 m-b-xs">
+                        <input type="text" name="email"  value="{{app('request')->email??''}}" placeholder="请输入邮箱" class="form-control">
+                    </div>
+                    <div class="col-sm-2 width-auto">
+                        <div class="btn-group btn-group-sm">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            <button type="button" onclick="location.href='{{route('lazy-admin.user.index')}}'" class="btn btn-warning">
+                                <i class="fa fa-undo"></i>
+                            </button>
                         </div>
-                        <div class="col-sm-2 width-auto p-4">
-                            <div class="input-group">
-                                <input type="text" name="email"  value="{{app('request')->email??''}}" placeholder="请输入邮箱" class="input-sm form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-2 width-auto">
-                            <div class="btn-group btn-group-sm">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                                <button type="button" onclick="location.href='{{route('lazy-admin.user.index')}}'" class="btn btn-warning">
-                                    <i class="fa fa-undo"></i>
-                                </button>
-                            </div>
-                        </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    </div>
+                </form>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
