@@ -46,11 +46,10 @@ class AuthController extends Controller
         if (Auth::guard($guardName)->attempt($credentials)) {
             // 跳回判断
             $previousUrl = $request->session()->get('previous_url');
+            $url = route('lazy-admin.home');
             if (!empty($previousUrl)) {
                 $request->session()->forget('previous_url');
-                $url = $previousUrl;
-            } else {
-                $url = route('lazy-admin.home');
+                $url = sprintf("%s#%s", $url, base64_encode($previousUrl));
             }
             return ajaxReturn(1, '成功', ['url'=>$url]);
         } else {

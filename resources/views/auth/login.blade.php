@@ -16,11 +16,11 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
     <script>
-      if (window.top !== window.self) { 
+      if (window.top !== window.self) {
         window.top.location = window.location;
-      } 
-      window.DEBUG = "{{ env('APP_DEBUG', false) }}"; 
-      window.FormToken = "{{ csrf_token() }}"; 
+      }
+      window.DEBUG = "{{ env('APP_DEBUG', false) }}";
+      window.FormToken = "{{ csrf_token() }}";
     </script>
 </head>
 
@@ -45,6 +45,7 @@
     <script src="{{ lazy_asset('js/jquery.min.js') }}"></script>
     <script src="{{ lazy_asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/main.js') }}"></script>
 </body>
 </html>

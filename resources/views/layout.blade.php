@@ -39,6 +39,7 @@
     <script src="{{ lazy_asset('js/plugins/pace/pace.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/content.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/main.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     @stack('scripts')
 </body>

@@ -56,7 +56,7 @@
                     </li>
                     @foreach ($menus as $first)
                     <li>
-                        <a class="{{count($first['son'])>0?'':'J_menuItem' }}" href="{{ lazy_url($first['uri']) }}">
+                        <a class="{{count($first['son'])>0?'':'J_menuItem' }} {{md5(lazy_url($first['uri']))}}" href="{{ lazy_url($first['uri']) }}">
                             <i class="fa {{ $first['icon'] }}"></i>
                             <span class="nav-label">{{$first['title']}}</span>
                             @if (count($first['son'])>0)
@@ -67,7 +67,7 @@
                         <ul class="nav nav-second-level">
                             @foreach ($first['son'] as $second)
                             <li>
-                                <a class="{{count($second['son'])>0?'':'J_menuItem' }}" href="{{ lazy_url($second['uri']) }}">
+                                <a class="{{count($second['son'])>0?'':'J_menuItem' }} {{md5(lazy_url($second['uri']))}}" href="{{ lazy_url($second['uri']) }}">
                                     <span class="nav-label">{{$second['title']}}</span>
                                     @if (count($second['son']) >0)
                                     <span class="fa arrow"></span>
@@ -77,7 +77,7 @@
                                 <ul class="nav nav-third-level">
                                     @foreach ($second['son'] as $third)
                                     <li>
-                                        <a class="J_menuItem" href="{{ lazy_url($third['uri']) }}">{{$third['title']}}</a>
+                                        <a class="J_menuItem {{md5(lazy_url($third['uri']))}}" href="{{ lazy_url($third['uri']) }}">{{$third['title']}}</a>
                                     </li>
                                     @endforeach
                                 </ul>
@@ -230,6 +230,44 @@
     <script src="{{ lazy_asset('js/contabs.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/plugins/pace/pace.min.js') }}"></script>
     <script src="{{ lazy_asset('js/plugins/toastr/toastr.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/md5.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/base64.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
+    <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/main.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
 </body>
 </html>
+<script>
+    $(function(){
+        /** 跳转hash */
+        setTimeout(() => {
+            try {
+                var base64Code = (window.location.hash).substr(1);
+                if (base64Code == "") {
+                    return false;
+                }
+                var url =  $.base64.decode(base64Code);
+                var currentUrl = window.location.protocol + "//" +window.location.host + window.location.pathname
+                if (currentUrl == url) {
+                    return false;
+                }
+                var hash = $.md5(url);
+                document.location.hash = "";
+                var menuDom = $('.'+hash);
+                if (menuDom.length>0) {
+                    menuDom.find('span').trigger('click');
+                    menuDom.parents('ul').siblings("a").trigger('click')
+                } else {
+                    var tdom = '<li><a class="J_menuItem '+hash+'" style="display:none;" href="'+url+'" data-index="998">\
+                                    <span class="nav-label">上一次打开</span>\
+                                </a></li>';
+                    $("#side-menu").append(tdom);
+                    var tmenuDom = $('.'+hash);
+                    tmenuDom.find('span').trigger('click');
+                    tmenuDom.remove();
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }, 200);
+    })
+</script>

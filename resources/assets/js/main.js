@@ -8,12 +8,10 @@ $(function () {
      */
     var debug = DEBUG;
 
-    /**
-     * 禁止多次ajax处理
-     */
-    var submitStatus = false;
-
-    var ajaxState = false;
+    // 打开vconsole
+    if (debug) {
+        new VConsole();
+    }
 
     // 配置toast提示框
     toastr.options = {
@@ -40,14 +38,21 @@ $(function () {
         typeof info == "undefined" ? info = "确认这样操作吗？" : ""
         typeof title == "undefined" ? title = "提示信息" : ""
 
+        var subConfirm = false;
         //询问框
         var main = layer.confirm(info, {
             btn: ['确认', '取消'], //按钮
             skin: 'layui-layer-molv',
             title: title
         }, function () {
+            if (subConfirm == true) {
+                return false;
+            }
+            subConfirm = true;
             layer.close(main)
             typeof trueFun == "function" && trueFun();
+            // 2秒后解除请求限制
+            setTimeout(() => {subConfirm = false}, 2000);
         }, function () {
             layer.close(main)
             typeof cancelFun == "function" && cancelFun();
@@ -62,12 +67,18 @@ $(function () {
      */
     $.prompt = function (info, trueFun) {
         typeof info == "undefined" ? info = "输入内容，并确认" : ""
+        var subPrompt = false;
         var promptindex = layer.prompt({
             title: info,
             formType: 2
         }, function (text) {
+            if (subPrompt == true) {
+                return false;
+            }
+            subPrompt = true;
             layer.close(promptindex);
             typeof trueFun == "function" && trueFun(text);
+            setTimeout(() => {subPrompt = false}, 2000);
         });
     }
 
@@ -344,7 +355,13 @@ $(function () {
         })
     })
 
+    var sub = false
+    // 提交表单
     $.submit = function (t) {
+        if (sub == true) {
+            return false;
+        }
+        sub = true
         var form = t.parents('form:first');
         var data = form.serialize();
         var url = form.attr('action');
@@ -357,6 +374,8 @@ $(function () {
             var fun = eval(form.attr('data-fun'))
         } catch (error) { }
         $.ajaxRequest(url, data, method, fun)
+        // 2秒后解除请求限制
+        setTimeout(() => {sub = false}, 2000);
     }
 
     /**
@@ -409,7 +428,12 @@ $(function () {
     /**
      * 提交与上传
      */
+    var subUpload = false
     $('body').on('click', '.btn-submit-upload', function () {
+        if (subUpload == true) {
+            return false
+        }
+        subUpload = true;
         var t = $(this);
         var form = t.parents('form:first');
         // var data = form.serialize();
@@ -424,6 +448,8 @@ $(function () {
             var fun = eval(form.attr('data-fun'))
         } catch (error) { }
         $.ajaxUploadRequest(url, formData, method, fun)
+        // 2秒后解除请求限制
+        setTimeout(() => {subUpload = false}, 2000);
     })
 
     /**
@@ -451,10 +477,6 @@ $(function () {
      */
     $.ajaxRequest = function (url, data, method, callback) {
         // 防止多次操作ajax
-        // if (submitStatus == true) {
-        //     return
-        // }
-        submitStatus = true
         typeof method == 'undefined' ? method = 'get' : "'"
         typeof data == 'undefined' ? data = {} : ""
         if (typeof data == 'object') {
@@ -487,7 +509,7 @@ $(function () {
                             } else {
                                 url = data.data.url;
                             }
-                            window.location.href = url;
+                            window.location.replace(url);
                         } else {
                             window.location.reload();
                         }
@@ -503,7 +525,6 @@ $(function () {
                 toastr.error('处理失败，请重试 !');
             },
             complete: function () {
-                submitStatus = false
             }
         });
     }
@@ -517,10 +538,6 @@ $(function () {
 	 * @param function callback 回调函数
 	 */
     $.ajaxUploadRequest = function (url, data, method, callback) {
-        if (ajaxState == true) {
-            return
-        }
-        ajaxState = true
         data.append('_token', FormToken);
         debug && console.info(data)
         var ajaxTimeoutTest = $.ajax({
@@ -542,7 +559,7 @@ $(function () {
                             } else {
                                 url = data.data.url;
                             }
-                            window.location.href = url;
+                            window.location.replace(url);
                         } else {
                             window.location.reload();
                         }
@@ -558,7 +575,6 @@ $(function () {
                 toastr.error("操作失败，请重试~");
             },
             complete: function (XMLHttpRequest, status) {
-                ajaxState = false
             }
         });
     }
@@ -610,14 +626,15 @@ $(function () {
 
     // 全局返回
     $('body').on('click', '.history-back', function () {
-        var params = $.getHashParameters();
-        params['back'] != undefined ? history.go(params['back']) : history.go(-1)
+        history.go(-1)
+        // var params = $.getHashParameters();
+        // params['back'] != undefined ? history.go(params['back']) : history.go(-1)
     })
 
     // 不走前往url
     $('body').on('click', '.goUrl', function () {
         var url = $(this).attr('url');
-        window.location.href = url;
+        window.location.replace(href);
     })
 
     /**
