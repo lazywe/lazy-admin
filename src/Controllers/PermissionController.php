@@ -2,6 +2,7 @@
 namespace Lazy\Admin\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Lazy\Admin\Models\Permission;
 use Validator;
 
@@ -46,7 +47,7 @@ class PermissionController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:Lazy\Admin\Models\Permission'
+                Rule::unique(config("permission.table_names.permissions"))
             ],
         ], [
             'title.required'     => '名称不能为空.',
@@ -99,7 +100,7 @@ class PermissionController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:Lazy\Admin\Models\Permission,name,'. $credentials['id']
+                Rule::unique(config("permission.table_names.permissions"))->ignore($credentials['id'])
             ],
         ], [
             'id.required' => '非法操作.',

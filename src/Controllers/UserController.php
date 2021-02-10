@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Lazy\Admin\Models\AdminUser;
 use Lazy\Admin\Models\Role;
 use DB;
+use Illuminate\Validation\Rule;
 use Lazy\Admin\Guard;
 
 class UserController extends Controller
@@ -52,9 +53,16 @@ class UserController extends Controller
     {
         $credentials = $request->only('name','real_name', 'email', 'password', 'role');
         $validator = Validator::make($credentials, [
-            'name'              => 'required|unique:Lazy\Admin\Models\AdminUser',
+            'name'              => [
+                'required',
+                Rule::unique(config("lazy-admin.table_names.user"))
+            ],
             'real_name'         => 'required',
-            'email'             => 'required|email|unique:Lazy\Admin\Models\AdminUser',
+            'email'             => [
+                'required',
+                'email',
+                Rule::unique(config("lazy-admin.table_names.user"))
+            ],
             'password'          => 'required|min:6',
         ], [
             'name.required'     => '名称不能为空.',
@@ -120,15 +128,22 @@ class UserController extends Controller
         }
         $validator = Validator::make($credentials, [
             'id'                   => 'required',
-            'name'                 => 'required|unique:Lazy\Admin\Models\AdminUser,name,'. $credentials['id'],
+            'name'                 => [
+                'required',
+                Rule::unique(config("lazy-admin.table_names.user"))->ignore($credentials['id'])
+            ],
             'real_name'            => 'required',
-            'email'                => 'required|email|unique:Lazy\Admin\Models\AdminUser,email,'. $credentials['id'],
+            'email'                => [
+                'required',
+                'email',
+                Rule::unique(config("lazy-admin.table_names.user"))->ignore($credentials['id'])
+            ],
             'password'             => 'sometimes|min:6',
         ], [
             'id.required'          => '非法操作,id不能为空.',
-            'name.required'        => '名字不能为空.',
-            'name.unique'        => '名字已经存在.',
-            'real_name.required'  => '真实姓名不能为空.',
+            'name.required'        => '名称不能为空.',
+            'name.unique'          => '名称已经存在.',
+            'real_name.required'   => '真实姓名不能为空.',
             'email.required'       => '邮箱不能为空.',
             'email.email'          => '邮箱格式错误.',
             'email.unique'         => '邮箱已经存在.',

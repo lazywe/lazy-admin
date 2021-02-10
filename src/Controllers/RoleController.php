@@ -7,6 +7,7 @@ use Lazy\Admin\Models\Permission;
 use Validator;
 use DB;
 use Exception;
+use Illuminate\Validation\Rule;
 
 class RoleController extends Controller
 {
@@ -51,7 +52,7 @@ class RoleController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:Lazy\Admin\Models\Role'
+                 Rule::unique(config("permission.table_names.roles"))
             ],
         ], [
             'title.required' => '名称不能为空.',
@@ -115,7 +116,7 @@ class RoleController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                'unique:Lazy\Admin\Models\Role,name,' . $credentials['id'],
+                Rule::unique(config("permission.table_names.roles"))->ignore($credentials['id'])
             ],
         ], [
             'id.required'     => '非法操作.',
