@@ -17,6 +17,7 @@ class CreateTables extends Migration
         Schema::create($tableNames['user'], function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('real_name');
             $table->string('email')->unique("email");
             $table->timestamp('email_verified_at')->nullable();
             $table->string('guard_name');

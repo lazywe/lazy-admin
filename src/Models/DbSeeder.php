@@ -4,6 +4,7 @@ namespace Lazy\Admin\Models;
 
 use Lazy\Admin\Models\AdminUser;
 use Illuminate\Database\Seeder;
+use Lazy\Admin\Guard;
 use Lazy\Admin\Models\Role;
 use Lazy\Admin\Models\Permission;
 use Lazy\Admin\Models\Menus;
@@ -22,6 +23,8 @@ class DbSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         $user = AdminUser::create([
             'name' => 'admin',
+            'real_name' => 'admin',
+            'guard_name' => Guard::ADMIN_GUARD,
             'email' => 'admin@gmail.com',
             'password' => bcrypt('123456')
         ]);

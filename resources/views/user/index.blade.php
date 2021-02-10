@@ -20,6 +20,9 @@
                         <input type="text" name="name" value="{{app('request')->name??''}}" placeholder="请输入名称" class="form-control">
                     </div>
                     <div class="col-sm-2 m-b-xs">
+                        <input type="text" name="real_name" value="{{app('request')->real_name??''}}" placeholder="请输入真实姓名" class="form-control">
+                    </div>
+                    <div class="col-sm-2 m-b-xs">
                         <input type="text" name="email"  value="{{app('request')->email??''}}" placeholder="请输入邮箱" class="form-control">
                     </div>
                     <div class="col-sm-2 width-auto">
@@ -40,6 +43,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>名称</th>
+                                <th>真实姓名</th>
                                 <th>邮箱</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
@@ -51,6 +55,7 @@
                             <tr>
                                 <td>{{ $v->id }}</td>
                                 <td>{{ $v->name }}</td>
+                                <td>{{ $v->real_name }}</td>
                                 <td>{{ $v->email }}</td>
                                 <td>{{ $v->created_at }}</td>
                                 <td>{{ $v->updated_at }}</td>

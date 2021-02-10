@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Lazy\Admin\Models\AdminUser;
 use Lazy\Admin\Models\Role;
 use DB;
+use Lazy\Admin\Guard;
 
 class UserController extends Controller
 {
@@ -49,13 +50,16 @@ class UserController extends Controller
      */
     public function createDo(Request $request)
     {
-        $credentials = $request->only('name', 'email', 'password', 'role');
+        $credentials = $request->only('name','real_name', 'email', 'password', 'role');
         $validator = Validator::make($credentials, [
-            'name'              => 'required',
+            'name'              => 'required|unique:Lazy\Admin\Models\AdminUser',
+            'real_name'         => 'required',
             'email'             => 'required|email|unique:Lazy\Admin\Models\AdminUser',
             'password'          => 'required|min:6',
         ], [
-            'name.required'     => '名字不能为空.',
+            'name.required'     => '名称不能为空.',
+            'name.unique'     => '名称已经存在.',
+            'real_name.required'  => '真实姓名不能为空.',
             'email.required'    => '邮箱不能为空.',
             'email.email'       => '邮箱格式错误.',
             'email.unique'      => '邮箱已经存在.',
@@ -71,6 +75,7 @@ class UserController extends Controller
             DB::transaction(function () use ($credentials) {
                 $roles = $credentials['role']??[];
                 unset($credentials['role']);
+                $credentials['guard_name'] = Guard::ADMIN_GUARD;
                 $user = AdminUser::create($credentials);
                 if (!$user) {
                     throw new \Exception('添加失败,请重试.');
@@ -109,18 +114,21 @@ class UserController extends Controller
      */
     public function updateDo(Request $request)
     {
-        $credentials = $request->only('id', 'name', 'email', 'password', 'role');
+        $credentials = $request->only('id', 'name','real_name', 'email', 'password', 'role');
         if (empty($credentials['password'])) {
             unset($credentials['password']);
         }
         $validator = Validator::make($credentials, [
             'id'                   => 'required',
-            'name'                 => 'required',
+            'name'                 => 'required|unique:Lazy\Admin\Models\AdminUser,name,'. $credentials['id'],
+            'real_name'            => 'required',
             'email'                => 'required|email|unique:Lazy\Admin\Models\AdminUser,email,'. $credentials['id'],
             'password'             => 'sometimes|min:6',
         ], [
             'id.required'          => '非法操作,id不能为空.',
             'name.required'        => '名字不能为空.',
+            'name.unique'        => '名字已经存在.',
+            'real_name.required'  => '真实姓名不能为空.',
             'email.required'       => '邮箱不能为空.',
             'email.email'          => '邮箱格式错误.',
             'email.unique'         => '邮箱已经存在.',

@@ -28,6 +28,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">真实姓名：</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="real_name" class="form-control" placeholder="请输入真实姓名"> <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">Email：</label>
                         <div class="col-sm-9">
                             <input type="text" name="email" class="form-control" placeholder="请输入Email"> <span class="help-block m-b-none">邮箱用于登录</span>
@@ -50,7 +56,7 @@
                             @endforeach
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="col-sm-12 col-sm-offset-3">
                             <button class="btn btn-primary btn-submit" type="button">保存</button>

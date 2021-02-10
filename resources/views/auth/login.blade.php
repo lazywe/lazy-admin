@@ -33,7 +33,7 @@
             <h3>登录</h3>
             <form class="m-t" role="form" method="POST" action="{{route('lazy-admin.logindo')}}">
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="邮箱" required="">
+                    <input type="account" name="account" class="form-control" placeholder="名称/邮箱" required="">
                 </div>
                 <div class="form-group">
                     <input type="password" name="password" class="form-control" placeholder="密码" required="">
