@@ -5,7 +5,9 @@ namespace Lazy\Admin\Controllers;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Lazy\Admin\Guard;
+use Lazy\Admin\Models\AdminUser;
 
 class AuthController extends Controller
 {
@@ -30,12 +32,12 @@ class AuthController extends Controller
      */
     public function loginDo(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('account', 'password');
         $validator = Validator::make($credentials, [
-            'email'       => 'required',
+            'account'       => 'required',
             'password'    => 'required',
         ], [
-            'email.required' => '邮箱不能为空.',
+            'account.required' => '名称/邮箱不能为空.',
             'password.required' => '密码不能为空.'
         ]);
         if ($validator->fails()) {
@@ -43,18 +45,32 @@ class AuthController extends Controller
             return ajaxReturn(0, $errors->first());
         }
         $guardName = Guard::ADMIN_GUARD;
-        if (Auth::guard($guardName)->attempt($credentials)) {
-            // 跳回判断
-            $previousUrl = $request->session()->get('previous_url');
-            $url = route('lazy-admin.home');
-            if (!empty($previousUrl)) {
-                $request->session()->forget('previous_url');
-                $url = sprintf("%s#%s", $url, base64_encode($previousUrl));
-            }
-            return ajaxReturn(1, '成功', ['url'=>$url]);
-        } else {
+        $where = [
+            ['name', '=', $credentials['account']],
+            ['guard_name', '=', $guardName]
+        ];
+        $orWhere = [
+            ['email', '=', $credentials['account']],
+            ['guard_name', '=', $guardName]
+        ];
+        $adminUser = AdminUser::where($where)->orWhere($orWhere)->first();
+        if (empty($adminUser)) {
             return ajaxReturn(0, '账号密码错误,请重试.');
         }
+        $checkPass = Hash::check($credentials['password'], $adminUser->getAuthPassword());
+        if (!$checkPass) {
+            return ajaxReturn(0, '账号密码错误,请重试.');
+        }
+        // 登录用户
+        Auth::guard($guardName)->login($adminUser);
+        // 跳回判断
+        $previousUrl = $request->session()->get('previous_url');
+        $url = route('lazy-admin.home');
+        if (!empty($previousUrl)) {
+            $request->session()->forget('previous_url');
+            $url = sprintf("%s#%s", $url, base64_encode($previousUrl));
+        }
+        return ajaxReturn(1, '成功', ['url'=>$url]);
     }
 
     /**
