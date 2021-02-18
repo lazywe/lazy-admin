@@ -24,6 +24,9 @@ class UserController extends Controller
         if (!empty($request->name)) {
             $where[] = ['name', 'like', "%{$request->name}%"];
         }
+        if (!empty($request->real_name)) {
+            $where[] = ['real_name', 'like', "%{$request->real_name}%"];
+        }
         if (!empty($request->email)) {
             $where[] = ['email', 'like', "%{$request->email}%"];
         }
