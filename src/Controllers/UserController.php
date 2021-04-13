@@ -58,13 +58,13 @@ class UserController extends Controller
         $validator = Validator::make($credentials, [
             'name'              => [
                 'required',
-                Rule::unique(config("lazy-admin.table_names.user"))
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("lazy-admin.table_names.user")))
             ],
             'real_name'         => 'required',
             'email'             => [
                 'required',
                 'email',
-                Rule::unique(config("lazy-admin.table_names.user"))
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("lazy-admin.table_names.user")))
             ],
             'password'          => 'required|min:6',
         ], [
@@ -133,13 +133,13 @@ class UserController extends Controller
             'id'                   => 'required',
             'name'                 => [
                 'required',
-                Rule::unique(config("lazy-admin.table_names.user"))->ignore($credentials['id'])
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("lazy-admin.table_names.user")))->ignore($credentials['id'])
             ],
             'real_name'            => 'required',
             'email'                => [
                 'required',
                 'email',
-                Rule::unique(config("lazy-admin.table_names.user"))->ignore($credentials['id'])
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("lazy-admin.table_names.user")))->ignore($credentials['id'])
             ],
             'password'             => 'sometimes|min:6',
         ], [

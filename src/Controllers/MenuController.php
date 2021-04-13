@@ -48,7 +48,8 @@ class MenuController extends Controller
         $validator = Validator::make($credentials, [
             'title'              => 'required',
             'parent_id'          => 'required',
-            'uri'                => 'required',
+            'uri'                => 'required|max:50',
+            'icon'                => 'max:50',
             'order'              => 'required',
             'roles'              => 'required',
         ], [
@@ -104,7 +105,8 @@ class MenuController extends Controller
             'id' => 'required',
             'title' => 'required',
             'parent_id' => 'required',
-            'uri' => 'required',
+            'uri' => 'required|max:50',
+            'icon' => 'max:50',
             'order' => 'required',
             'roles' => 'required',
         ], [

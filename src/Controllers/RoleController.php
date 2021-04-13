@@ -52,7 +52,7 @@ class RoleController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                 Rule::unique(config("permission.table_names.roles"))
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("permission.table_names.roles")))
             ],
         ], [
             'title.required' => '名称不能为空.',
@@ -116,7 +116,7 @@ class RoleController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                Rule::unique(config("permission.table_names.roles"))->ignore($credentials['id'])
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("permission.table_names.roles")))->ignore($credentials['id'])
             ],
         ], [
             'id.required'     => '非法操作.',

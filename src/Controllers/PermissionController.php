@@ -47,7 +47,7 @@ class PermissionController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                Rule::unique(config("permission.table_names.permissions"))
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("permission.table_names.permissions")))
             ],
         ], [
             'title.required'     => '名称不能为空.',
@@ -100,7 +100,7 @@ class PermissionController extends Controller
                 'required',
                 'alpha_dash',
                 'regex:/[a-zA-Z]+/',
-                Rule::unique(config("permission.table_names.permissions"))->ignore($credentials['id'])
+                Rule::unique(sprintf("%s.%s",config("lazy-admin.connection"), config("permission.table_names.permissions")))->ignore($credentials['id'])
             ],
         ], [
             'id.required' => '非法操作.',
