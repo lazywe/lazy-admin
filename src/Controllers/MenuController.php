@@ -46,12 +46,12 @@ class MenuController extends Controller
     {
         $credentials = $request->only('title', 'uri', 'parent_id', 'order', 'icon', 'roles');
         $validator = Validator::make($credentials, [
-            'title'              => 'required',
-            'parent_id'          => 'required',
+            'title'              => 'required|max:50',
+            'parent_id'          => 'required|max:10',
             'uri'                => 'required|max:50',
             'icon'                => 'max:50',
-            'order'              => 'required',
-            'roles'              => 'required',
+            'order'              => 'required|int|digits_between:1,10',
+            'roles'              => 'required|max:249',
         ], [
             'title.required'     => '菜单名字不能为空.',
             'parent_id.required' => '非法操作.',
@@ -103,12 +103,12 @@ class MenuController extends Controller
         $credentials = $request->only('id', 'title', 'uri', 'parent_id', 'order', 'icon', 'roles');
         $validator = Validator::make($credentials, [
             'id' => 'required',
-            'title' => 'required',
-            'parent_id' => 'required',
+            'title' => 'required|max:50',
+            'parent_id' => 'required|max:10',
             'uri' => 'required|max:50',
             'icon' => 'max:50',
-            'order' => 'required',
-            'roles' => 'required',
+            'order' => 'required|int|digits_between:1,10',
+            'roles' => 'required|max:249',
         ], [
             'id.required' => '非法操作.',
             'title.required' => '菜单名字不能为空.',

@@ -39,13 +39,22 @@
                                 <td>
                                     @lazy_can('admin-role-update')
                                     <a class="btn btn-sm btn-primary" href="{{ route('lazy-admin.role.update', ['id'=>$v->id]) }}">
-                                        <i class="fa fa-lg fa-edit"></i>&nbsp;修改
+                                        修改角色
                                     </a>
+                                    <br/>
                                     @end_lazy_can
+
+                                    @lazy_can('admin-role-menu')
+                                    <a class="btn btn-sm btn-warning" href="{{ route('lazy-admin.role.menu', ['id'=>$v->id]) }}">
+                                        角色菜单
+                                    </a>
+                                    <br/>
+                                    @end_lazy_can
+
                                     @if($v->id !=1 )
                                         @lazy_can('admin-role-delete')
                                         <a href="javascript:;" class="btn btn-sm btn-danger operation-confirm-btn" data-method="delete" data-url="{{ route('lazy-admin.role.delete', ['id'=>$v->id]) }}" data-confirm-info="确认删除吗？">
-                                            <i class="fa fa-lg fa-trash"></i>&nbsp;删除
+                                            删除角色
                                         </a>
                                         @end_lazy_can
                                     @endif

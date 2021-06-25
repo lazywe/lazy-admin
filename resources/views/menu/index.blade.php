@@ -32,14 +32,16 @@
                                 <th>icon</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
-                                <th width="10%">操作</th>
+                                <th width="12%">操作</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($list as $k => $v)
                             <tr>
                                 <td>{{ $v['order'] }}</td>
-                                <td>{!!str_repeat("&nbsp;&nbsp;&nbsp;", $v['level'])!!}{{ $v['title'] }}</td>
+                                <td>
+                                    {!!str_repeat("|---", $v['level'])!!}{{ $v['title'] }}
+                                </td>
                                 <td>
                                     @if(!empty($v['uri']))
                                         {{ $v['uri'] }}

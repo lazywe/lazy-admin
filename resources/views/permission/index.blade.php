@@ -21,8 +21,8 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>名称</th>
-                                <th>标识</th>
+                                <th width="20%">名称</th>
+                                <th width="20%">标识</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>
                                 <th width="15%">操作</th>

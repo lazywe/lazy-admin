@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Lazy\Admin\Models\Role;
 use Lazy\Admin\Models\Permission;
 use Validator;
-use DB;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Lazy\Admin\Models\Menus;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -189,5 +191,61 @@ class RoleController extends Controller
             return ajaxReturn(0, $e->getMessage());
         }
         return ajaxReturn(1, '删除成功');
+    }
+
+    /**
+     * 权限菜单
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function menu(Request $request)
+    {
+        $roleId = $request->input('id');
+        $role = Role::find($roleId);
+        if (empty($role)) {
+            return abort(404);
+        }
+        $list = Menus::get();
+        $list = menu_tree_level($list);
+        return view("lazy-view::role.menu", compact('list', 'role'));
+    }
+
+    /**
+     * 权限菜单
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function menuDo(Request $request)
+    {
+        $roleName = $request->input('role_name');
+        $menuIds = $request->input('menu_ids', []);
+        DB::beginTransaction();
+        $menu = Menus::get();
+        $updateMenus = $menu->every(function($item) use($roleName, $menuIds) {
+            $roles = Str::of($item->roles)->explode(",");
+            // 已有的role 删除
+            if (!in_array($item->id, $menuIds)) {
+                if (!$roles->contains($roleName)) {
+                    return true;
+                }
+                $newRoles = $roles->diff([$roleName]);
+            } else {
+                $newRoles = $roles->push($roleName)->unique();
+            }
+            $updateMenu = $item->update([
+                'roles' => $newRoles->join(",")
+            ]);
+            if ($updateMenu === false) {
+                return false;
+            }
+            return true;
+        });
+        if (!$updateMenus) {
+            return ajaxReturn(0, '设置失败');
+        }
+        DB::commit();
+        return ajaxReturn(1, '设置成功');
     }
 }
