@@ -20,6 +20,7 @@ class ServiceProvider extends LaravelServiceProvider
     public $routeMiddleware = [
         'lazy-admin.log'     => Middleware\AuthLog::class,
         'lazy-admin.auth'    => Middleware\Authenticate::class,
+        'lazy-admin.menu'    => Middleware\MenuMiddleware::class,
         'role'               => RoleMiddleware::class,
         'permission'         => PermissionMiddleware::class,
         'role_or_permission' => RoleOrPermissionMiddleware::class,
@@ -33,7 +34,8 @@ class ServiceProvider extends LaravelServiceProvider
     public $middlewareGroups = [
         'lazy-admin' => [
             'lazy-admin.log',
-            'lazy-admin.auth'
+            'lazy-admin.auth',
+            'lazy-admin.menu'
         ]
     ];
 

@@ -30,7 +30,9 @@
                             <select class="form-control menu" name="parent_id">
                                 <option value="0">根菜单</option>
                                 @foreach($list as $k => $v)
-                                    <option value="{{$v['id']}}">{!!str_repeat("&nbsp;&nbsp;", $v['level']+1)!!}{{ $v['title'] }}</option>
+                                    @if ($v['level'] < 2)
+                                        <option value="{{$v['id']}}">{!!str_repeat("|--", $v['level']+1)!!}{{ $v['title'] }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>

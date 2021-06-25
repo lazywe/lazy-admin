@@ -26,9 +26,10 @@ $(function () {
         "progressBar": true
     }
 
+    // ajax 启动加载框
     var index;
     $(document).ajaxStart(function(){
-        index = layer.msg('加载中', {icon: 16,shade: 0.01});
+        index = layer.msg('加载中', {icon: 16,shade: 0.01, time:60});
     });
     $(document).ajaxComplete(function(){
         if (index != undefined) {
@@ -77,21 +78,36 @@ $(function () {
      */
     $.prompt = function (info, trueFun) {
         typeof info == "undefined" ? info = "输入内容，并确认" : ""
+        typeof maxlength == "undefined" ? maxlength = 255 : ""
         var subPrompt = false;
         var promptindex = layer.prompt({
+            type:1,
             title: info,
-            formType: 2
+            formType: 2,
+            value:value,
+            maxlength:parseInt(maxlength),
+            skin: 'layui-layer-prompt layui-layer-molv layui-layer-dialog',
         }, function (text) {
-            if (subPrompt == true) {
-                return false;
-            }
-            subPrompt = true;
-            layer.close(promptindex);
-            typeof trueFun == "function" && trueFun(text);
-            setTimeout(() => {subPrompt = false}, 2000);
+            typeof trueFun == "function" && trueFun(text, index);
         });
     }
 
+    // 选中
+    $('body').off('click', '.batch-checkbox').on('click', '.batch-checkbox', function(){
+        var checkedLen = $(".batch-checkbox:checked").length
+        var len = $(".batch-checkbox").length
+        if (checkedLen == len) {
+            $(".batch-checkbox-all").prop("checked", true)
+        } else {
+            $(".batch-checkbox-all").prop("checked", false)
+        }
+        try {
+            var fun = eval($(this).attr("callback"));
+            typeof fun == "function" && fun();
+        } catch (error) {
+        }
+    })
+    // 批量选中
     $('body').off('click', '.batch-checkbox-all').on('click', '.batch-checkbox-all', function () {
         var t = $(this)
         if (t.is(":checked")) {
@@ -102,7 +118,7 @@ $(function () {
     })
 
     /**
-     * 批量操作
+     * 提示框批量操作
      */
     $('body').on('click', '.batch-confirm-btn', function () {
         var self = $(this)
@@ -365,13 +381,8 @@ $(function () {
         })
     })
 
-    var sub = false
     // 提交表单
     $.submit = function (t) {
-        if (sub == true) {
-            return false;
-        }
-        sub = true
         var form = t.parents('form:first');
         var data = form.serialize();
         var url = form.attr('action');
@@ -384,8 +395,6 @@ $(function () {
             var fun = eval(form.attr('data-fun'))
         } catch (error) { }
         $.ajaxRequest(url, data, method, fun)
-        // 2秒后解除请求限制
-        setTimeout(() => {sub = false}, 2000);
     }
 
     /**
@@ -403,6 +412,9 @@ $(function () {
         var info = self.attr('data-title');
         var url = self.attr('data-url');
         var method = self.attr('data-method');
+        // todo add
+        var value = self.attr('data-default');
+        var max = self.attr('data-max');
 
         // 未定义请求地址
         if (typeof url != 'string') {
@@ -414,7 +426,6 @@ $(function () {
             var trueFun = eval(self.attr('data-truefun'));
             var cancelfun = eval(self.attr('data-cancelfun'));
         } catch (error) {
-
         }
 
         try {
@@ -427,9 +438,25 @@ $(function () {
         }
 
         // 绑定事件
-        $.prompt(info, function (text) {
+        $.prompt(max, value, info, function (text, promptindex) {
             data['text'] = text
-            $.ajaxRequest(url, data, method, trueFun);
+            var reqTrueFun = undefined;
+            if (typeof trueFun == "function") {
+                reqTrueFun = function(data, promptindex){
+                    trueFun(data, promptindex);
+                }
+            } else {
+                reqTrueFun = function(data, promptindex){
+                    if (data.status == 1) {
+                        layer.close(promptindex);
+                        toastr.success(data.info);
+                        location.reload();
+                    } else {
+                        toastr.error(data.info);
+                    }
+                }
+            }
+            $.ajaxRequest(url, data, method, reqTrueFun);
         })
     })
 
@@ -438,12 +465,7 @@ $(function () {
     /**
      * 提交与上传
      */
-    var subUpload = false
     $('body').on('click', '.btn-submit-upload', function () {
-        if (subUpload == true) {
-            return false
-        }
-        subUpload = true;
         var t = $(this);
         var form = t.parents('form:first');
         // var data = form.serialize();
@@ -458,8 +480,6 @@ $(function () {
             var fun = eval(form.attr('data-fun'))
         } catch (error) { }
         $.ajaxUploadRequest(url, formData, method, fun)
-        // 2秒后解除请求限制
-        setTimeout(() => {subUpload = false}, 2000);
     })
 
     /**
@@ -598,30 +618,7 @@ $(function () {
         });
     }
 
-    var loadHtml = '<div class=\'loadingDom\'><i class=\'fa fa-spinner fa-pulse\'></i>处理中...</div>'
-    var loadStatus = false;
-    /**
-     * 处理中状态
-     */
-    $.startLoad = function () {
-        if (loadStatus == false) {
-            loadStatus = true
-            $('.sidebar-toggle').after(loadHtml);
-        }
-    }
-    $.stopLoad = function () {
-        if (loadStatus == true) {
-            loadStatus = false
-            $('.loadingDom').remove();
-        }
-    }
-    $(document).ajaxStart(function () {
-        $.startLoad();
-    })
-    $(document).ajaxStop(function () {
-        $.stopLoad();
-    })
-
+    // 获取url#号后面的参数
     $.getHashParameters = function () {
         var arr = (location.hash || "").replace(/^\#/, '').split("&");
         var params = {};
@@ -648,7 +645,7 @@ $(function () {
     })
 
     /**
-     * 加载url
+     * 窗口加载url
      */
     $.loadUrl = function (url, title) {
         layer.open({
@@ -663,7 +660,7 @@ $(function () {
     }
 
     /**
-     * 加载window
+     * 窗口加载url 自定义 宽度/高度
      */
     $.openWindow = function (url, title, width, height) {
         if (width == undefined) width = '60%';
@@ -679,6 +676,7 @@ $(function () {
         });
     }
 
+    //  绑定class事件
     $('body').on('click', '.open-window', function () {
         var t = $(this);
         var url = t.data('url');
@@ -686,7 +684,7 @@ $(function () {
         $.openWindow(url, title)
     })
 
-    // 上传组件
+    // 图片上传组件
     $('.upload-dom').each(function (e) {
         var t = $(this);
         var img = t.find('img');

@@ -94,7 +94,7 @@ button.toast-close-button {
 
 #toast-container {
     position: fixed;
-    z-index: 999999999
+    z-index: 2147483585
 }
 
 #toast-container * {
