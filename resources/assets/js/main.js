@@ -72,11 +72,13 @@ $(function () {
 
     /**
      * 确认输入弹出框
-     *
-     * @param string   info    提示信息
-     * @param function trueFun 正确回掉函数
+     * 
+     * @param {int} maxlength 
+     * @param {string} value 
+     * @param {string} info 
+     * @param {function} trueFun 
      */
-    $.prompt = function (info, trueFun) {
+    $.prompt = function (maxlength, value, info, trueFun) {
         typeof info == "undefined" ? info = "输入内容，并确认" : ""
         typeof maxlength == "undefined" ? maxlength = 255 : ""
         var subPrompt = false;
