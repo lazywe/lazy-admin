@@ -52,6 +52,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div>
+                        {{ $list->appends(request()->except('s'))->links() }}
+                    </div>
                 </div>
 
             </div>

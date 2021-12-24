@@ -30,7 +30,7 @@ class UserController extends Controller
         if (!empty($request->email)) {
             $where[] = ['email', 'like', "%{$request->email}%"];
         }
-        $list = AdminUser::where($where)->paginate(20);
+        $list = AdminUser::where($where)->orderBy('id', 'desc')->paginate(20);
         return view("lazy-view::user.index", compact('list'));
     }
 

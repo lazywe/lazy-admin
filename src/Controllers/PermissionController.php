@@ -17,7 +17,7 @@ class PermissionController extends Controller
      */
     public function index(Request $r)
     {
-        $list = Permission::paginate(30);
+        $list = Permission::orderBy('id', 'desc')->paginate(20);
         return view("lazy-view::permission.index", compact('list'));
     }
 

@@ -42,8 +42,8 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>名称</th>
-                                <th>真实姓名</th>
+                                <th>名称</th>
+                                <th>真实姓名</th>
                                 <th>邮箱</th>
                                 <th>创建时间</th>
                                 <th>修改时间</th>

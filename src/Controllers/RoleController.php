@@ -22,7 +22,7 @@ class RoleController extends Controller
      */
     public function index(Request $r)
     {
-        $list = Role::paginate(30);
+        $list = Role::orderBy('id', 'desc')->paginate(20);
         return view("lazy-view::role.index", compact('list'));
     }
 
@@ -35,7 +35,7 @@ class RoleController extends Controller
     public function create(Request $r)
     {
         // 权限
-        $list = Permission::all();
+        $list = Permission::orderBy('id', 'desc')->get();
         return view("lazy-view::role.create", compact('list'));
     }
 
@@ -98,7 +98,7 @@ class RoleController extends Controller
     {
         $data = Role::find($id);
         // 权限
-        $list = Permission::all();
+        $list = Permission::orderBy('id', 'desc')->get();
         return view("lazy-view::role.update", compact('data', 'list'));
     }
 
@@ -206,7 +206,7 @@ class RoleController extends Controller
         if (empty($role)) {
             return abort(404);
         }
-        $list = Menus::get();
+        $list = Menus::orderBy('order', 'desc')->get();
         $list = menu_tree_level($list);
         return view("lazy-view::role.menu", compact('list', 'role'));
     }
