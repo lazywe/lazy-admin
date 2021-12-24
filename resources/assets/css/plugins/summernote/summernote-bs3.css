@@ -545,10 +545,10 @@
   .note-editor .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-
+  
     display: table;
     /* 2 */
-
+  
   }
   .note-editor .dl-horizontal dd:after {
     clear: both;
@@ -557,10 +557,10 @@
   .note-editor .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-
+  
     display: table;
     /* 2 */
-
+  
   }
   .note-editor .dl-horizontal dd:after {
     clear: both;
@@ -2222,7 +2222,7 @@ fieldset[disabled] .note-editor .btn-link:focus {
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../../../fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../fonts/glyphicons-halflings-regulard41d.eot?') format('embedded-opentype'), url('../../../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../fonts/glyphicons-halflings-regular.svg') format('svg');
+  src: url('../../../fonts/glyphicons-halflings-regular.eot?') format('embedded-opentype'), url('../../../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../fonts/glyphicons-halflings-regular.svg') format('svg');
 }
 .note-editor .glyphicon {
   position: relative;

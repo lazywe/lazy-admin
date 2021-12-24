@@ -27,13 +27,16 @@ $(function () {
     }
 
     // ajax 启动加载框
-    var index;
+    var index2;
     $(document).ajaxStart(function(){
-        index = layer.msg('加载中', {icon: 16,shade: 0.01, time:60});
+        if (index2 != undefined) {
+            layer.close(index2)
+        }
+        index2 = layer.msg('加载中', {icon: 16,shade: 0.01, time:60000});
     });
-    $(document).ajaxComplete(function(){
-        if (index != undefined) {
-            layer.close(index)
+    $(document).ajaxStop(function(){
+        if (index2 != undefined) {
+            layer.close(index2)
         }
     });
 
@@ -116,6 +119,11 @@ $(function () {
             $(".batch-checkbox").prop("checked", true)
         } else {
             $(".batch-checkbox").prop("checked", false)
+        }
+        try {
+            var fun = eval(t.attr("callback"));
+            typeof fun == "function" && fun();
+        } catch (error) {
         }
     })
 
