@@ -61,7 +61,7 @@
                             </ul>
                         </div>
                         <div class="logo-element">
-                            H+
+                            {{config('lazy-admin.logo')}}
                         </div>
                     </li>
 
