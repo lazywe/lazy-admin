@@ -61,5 +61,9 @@ class InstallCommand extends Command
         // 生成静态文件
         $this->info("生成静态资源");
         $this->call('vendor:publish', ["--provider"=>"Lazy\Admin\ServiceProvider", "--tag" => "lazy-admin-assets"]);
+
+        // 生成静态文件
+        $this->info("生成数据库文件");
+        $this->call('vendor:publish', ["--provider"=>"Lazy\Admin\ServiceProvider", "--tag" => "lazy-admin-migrations"]);
     }
 }

@@ -31,7 +31,7 @@ class DbSeeder extends Seeder
         Menus::insert([
             [
                 'parent_id'      => 0,
-                'order'          => 2,
+                'order'          => 10,
                 'title'          => '后台用户管理',
                 'icon'           => 'fa-tasks',
                 'uri'            => 'admin-users',
@@ -85,6 +85,51 @@ class DbSeeder extends Seeder
                 'icon'           => '',
                 'uri'            => 'auth/log',
                 'roles'     => 'administrator',
+                'created_at'     => date("Y-m-d H:i:s"),
+                'updated_at'     => date("Y-m-d H:i:s")
+            ],[
+                'parent_id'      => 0,
+                'order'          => 5,
+                'title'          => '示例大全',
+                'icon'           => 'fa-desktop',
+                'uri'            => 'demo',
+                'roles'          => 'administrator',
+                'created_at'     => date("Y-m-d H:i:s"),
+                'updated_at'     => date("Y-m-d H:i:s")
+            ],[
+                'parent_id'      => 7,
+                'order'          => 5,
+                'title'          => '主页',
+                'icon'           => '',
+                'uri'            => 'demo/index',
+                'roles'          => 'administrator',
+                'created_at'     => date("Y-m-d H:i:s"),
+                'updated_at'     => date("Y-m-d H:i:s")
+            ],[
+                'parent_id'      => 7,
+                'order'          => 4,
+                'title'          => '表格',
+                'icon'           => '',
+                'uri'            => 'demo/table',
+                'roles'          => 'administrator',
+                'created_at'     => date("Y-m-d H:i:s"),
+                'updated_at'     => date("Y-m-d H:i:s")
+            ],[
+                'parent_id'      => 7,
+                'order'          => 3,
+                'title'          => '表单',
+                'icon'           => '',
+                'uri'            => 'demo/form',
+                'roles'          => 'administrator',
+                'created_at'     => date("Y-m-d H:i:s"),
+                'updated_at'     => date("Y-m-d H:i:s")
+            ],[
+                'parent_id'      => 7,
+                'order'          => 2,
+                'title'          => '按钮',
+                'icon'           => '',
+                'uri'            => 'demo/button',
+                'roles'          => 'administrator',
                 'created_at'     => date("Y-m-d H:i:s"),
                 'updated_at'     => date("Y-m-d H:i:s")
             ],

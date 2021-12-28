@@ -62,3 +62,11 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            set_active_menu("{{md5(route('lazy-admin.permission.index'))}}")
+        })
+    </script>
+@endpush

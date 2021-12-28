@@ -60,3 +60,11 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            set_active_menu("{{md5(route('lazy-admin.auth.log'))}}")
+        })
+    </script>
+@endpush

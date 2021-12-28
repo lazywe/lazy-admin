@@ -63,7 +63,7 @@
                         <label class="col-sm-2 control-label">角色：</label>
                         <div class="col-sm-9">
                             @foreach($roleList as $v)
-                            <label class="checkbox-inline" style="min-width:15%;">
+                            <label style="min-width:15%;">
                                 <input type="checkbox" name="roles[]" @if(in_array($v->name, $data->roles)) checked @endif value="{{$v->name}}" class="i-checks">{{$v->title}}
                             </label>
                             @endforeach
@@ -102,6 +102,8 @@
                 $(".icon").attr("disabled", true);
             }
         })
+
+        set_active_menu("{{md5(route('lazy-admin.menu.index'))}}")
     });
 </script>
 @endpush

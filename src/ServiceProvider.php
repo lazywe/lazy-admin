@@ -27,7 +27,7 @@ class ServiceProvider extends LaravelServiceProvider
     ];
 
     /**
-     * Group
+     * Group
      *
      * @var array
      */

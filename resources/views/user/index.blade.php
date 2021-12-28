@@ -60,7 +60,6 @@
                                 <td>{{ $v->created_at }}</td>
                                 <td>{{ $v->updated_at }}</td>
                                 <td>
-
                                         @lazy_can('admin-user-update')
                                         <a class="btn btn-sm btn-primary" href="{{ route('lazy-admin.user.update', ['id'=>$v->id]) }}">
                                             <i class="fa fa-lg fa-edit"></i>&nbsp;修改
@@ -88,3 +87,10 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+    <script>
+        $(function(){
+            set_active_menu("{{md5(route('lazy-admin.user.index'))}}")
+        })
+    </script>
+@endpush

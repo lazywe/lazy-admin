@@ -51,7 +51,7 @@
                         <label class="col-sm-2 control-label">角色：</label>
                         <div class="col-sm-9">
                             @foreach($list as $v)
-                            <label class="checkbox-inline" style="min-width:15%;">
+                            <label style="min-width:15%;">
                                 <input type="checkbox" name="role[]" @if($data->hasRole($v->name)) checked @endif value="{{$v->name}}" class="i-checks">{{$v->title}}
                             </label>
                             @endforeach
@@ -75,6 +75,7 @@
 <script src="{{ lazy_asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 <script>
     $(function () {
+        set_active_menu("{{md5(route('lazy-admin.user.index'))}}")
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',

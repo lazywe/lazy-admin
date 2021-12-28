@@ -68,7 +68,7 @@ class AuthController extends Controller
         $url = route('lazy-admin.home');
         if (!empty($previousUrl)) {
             $request->session()->forget('previous_url');
-            $url = sprintf("%s#%s", $url, base64_encode($previousUrl));
+            $url = $previousUrl;
         }
         return ajaxReturn(1, '成功', ['url'=>$url]);
     }

@@ -15,10 +15,8 @@ Route::group($config, function ($router) {
     });
     // 权限内功能
     $router->middleware('lazy-admin')->group(function ($router) {
-        // 管理页面
-        $router->get('/', "HomeController@home")->name('lazy-admin.home');
-        // 后台首页，可通过lazy-config.index自定义
-        $router->get('index', "HomeController@index")->name('lazy-admin.index');
+        // 管理页面 | 后台首页
+        $router->get('/', "HomeController@index")->name('lazy-admin.home');
         // 管理员管理
         $router->get('users', "UserController@index")->name('lazy-admin.user.index');
         $router->get('users/create', "UserController@create")->middleware(['permission:admin-user-create'])->name('lazy-admin.user.create');
@@ -59,5 +57,13 @@ Route::group($config, function ($router) {
 
         // 退出
         $router->put('logout', "AuthController@logout")->name('lazy-admin.logout');
+    });
+
+    // demo
+    $router->middleware('lazy-admin')->group(function ($router) {
+        $router->get('demo/index', "DemoController@index")->name('lazy-admin.demo.index');
+        $router->get('demo/table', "DemoController@table")->name('lazy-admin.demo.table');
+        $router->get('demo/form', "DemoController@form")->name('lazy-admin.demo.form');
+        $router->get('demo/button', "DemoController@button")->name('lazy-admin.demo.button');
     });
 });

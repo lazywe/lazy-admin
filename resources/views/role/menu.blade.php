@@ -27,7 +27,7 @@
                         <div class="form-group" data-level="{{$v['level']}}" data-id="{{$v->id}}" data-pid="{{$v->parent_id}}">
                             <div class="col-sm-4"></div>
                             <div class="col-sm-8">
-                                <label class="checkbox-inline" style="min-width:15%;">
+                                <label style="min-width:15%;">
                                     {!!str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $v['level'])!!}
                                     <input type="checkbox" name="menu_ids[]" value="{{$v->id}}" {{in_array($role->name, explode(',', $v->roles)) ? 'checked':''}}  class="i-checks">
                                     {{ $v['title'] }}
@@ -90,6 +90,7 @@
                 $.unselect(id);
             })
         }
+        set_active_menu("{{md5(route('lazy-admin.role.index'))}}")
     });
 </script>
 @endpush

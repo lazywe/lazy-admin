@@ -15,8 +15,7 @@
                         <button
                             type="submit"
                             class="btn btn-sm btn-primary"
-                            onclick="location.href='{{ route('lazy-admin.menu.create') }}'"
-                        >
+                            onclick="location.href='{{ route('lazy-admin.menu.create') }}'">
                          添加
                         </button>
                     </div>
@@ -83,3 +82,11 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            set_active_menu("{{md5(route('lazy-admin.menu.index'))}}")
+        })
+    </script>
+@endpush

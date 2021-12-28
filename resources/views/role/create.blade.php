@@ -37,7 +37,7 @@
                         <label class="col-sm-2 control-label">权限：</label>
                         <div class="col-sm-9">
                             @foreach($list as $v)
-                            <label class="checkbox-inline" style="min-width:15%;">
+                            <label style="min-width:15%;">
                                 <input type="checkbox" name="permission[]" value="{{$v->name}}" class="i-checks">{{$v->title}}
                             </label>
                             @endforeach
@@ -64,6 +64,7 @@
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
+        set_active_menu("{{md5(route('lazy-admin.role.index'))}}")
     });
 </script>
 @endpush

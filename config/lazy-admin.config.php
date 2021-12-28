@@ -19,7 +19,7 @@ return [
     /**
      * 后台首页地址 routeName
      */
-    'index' => "lazy-admin.index",
+    'index' => "lazy-admin.home",
     /**
      * 后台首页名称
      */

@@ -6,11 +6,14 @@
 
 - php >= 7.0
 - Composer
-- laravel >= 5.8 小于5.8版本的请装1.0.8版本
+- laravel >= 5.8
 - spatie/laravel-permission
 
 # demo
-![WX20200430-142527](https://user-images.githubusercontent.com/19222354/80681149-aac55800-8af2-11ea-9dc2-0473e8d16fd7.png)
+![admin](https://user-images.githubusercontent.com/19222354/147525523-91c1bc67-eeab-4edd-a3d8-a5a4ef9c416c.png)
+![admin_menu](https://user-images.githubusercontent.com/19222354/147525536-516c8710-1051-4875-b244-951b736ebec1.png)
+
+
 
 
 # Installation
