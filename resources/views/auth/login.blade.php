@@ -32,13 +32,14 @@
             </div>
             <h3>登录</h3>
             <form class="m-t" role="form" method="POST" action="{{route('lazy-admin.logindo')}}">
+                <input type="hidden" name="referer" value="{{request()->input('referer')}}">
                 <div class="form-group">
-                    <input type="account" name="account" class="form-control" placeholder="名称/邮箱" required="">
+                    <input type="account" name="account" id="account" class="form-control" placeholder="名称/邮箱" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="密码" required="">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="密码" required="">
                 </div>
-                <button type="button" class="btn btn-primary block full-width m-b btn-submit">登 录</button>
+                <button type="button" id="login-btn" class="btn btn-primary block full-width m-b btn-submit">登 录</button>
             </form>
         </div>
     </div>
@@ -48,5 +49,15 @@
     <script src="{{ lazy_asset('js/plugins/layer/layer.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/vconsole.min.js') }}?time={{config('lazy-admin.timestamp')}}"></script>
     <script src="{{ lazy_asset('js/main.js') }}"></script>
+
+    <script>
+        $(function(){
+            $("body").on("keydown", '#account, #password', function(e){
+                if(e && e.keyCode == 13) {
+                    $("#login-btn").trigger("click")
+                }
+            })
+        })
+    </script>
 </body>
 </html>

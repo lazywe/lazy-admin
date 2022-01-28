@@ -3,6 +3,19 @@
 
 @push('css')
 <link href="{{ lazy_asset('css/plugins/iCheck/custom.css') }}" rel="stylesheet">
+<style>
+    .rol-line {
+        display: flex;
+        width: 100%;
+        margin-top:5px;
+    }
+
+    .col-line {
+        display: flex;
+        width: auto;
+        margin-top:5px;
+    }
+</style>
 @endpush
 
 @section('content')
@@ -22,18 +35,15 @@
             <div class="ibox-content">
                 <form method="post" class="form-horizontal" action="{{ route('lazy-admin.role.menudo') }}">
                     <input type="hidden" value="{{$role->name}}" name="role_name">
-                    <div class="row">
+                    <div class="row"  id="line-dom" style="display: flex;flex-wrap: wrap;margin: 0;">
                         @foreach($list as $v)
-                        <div class="form-group" data-level="{{$v['level']}}" data-id="{{$v->id}}" data-pid="{{$v->parent_id}}">
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-8">
-                                <label style="min-width:15%;">
-                                    {!!str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $v['level'])!!}
+                            <div class="{{$v['level']==2?"col-line":"rol-line"}} form-group-btn" data-level="{{$v['level']}}" data-id="{{$v->id}}" data-pid="{{$v->parent_id}}" data-next="{{$v['next_count']}}">
+                                <label>
+                                    {!!str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", $v['level'])!!}
                                     <input type="checkbox" name="menu_ids[]" value="{{$v->id}}" {{in_array($role->name, explode(',', $v->roles)) ? 'checked':''}}  class="i-checks">
                                     {{ $v['title'] }}
                                 </label>
                             </div>
-                        </div>
                         @endforeach
                     </div>
                     <div class="form-group">
@@ -54,30 +64,48 @@
 <script src="{{ lazy_asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 <script>
     $(function () {
+
         $('.i-checks').iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });
 
-        $(".i-checks").on('ifChecked', function(event) {
-            var pid = $(this).parents('.form-group').attr("data-pid");
+        // 选择
+        $(".i-checks").on('ifClicked', function(event) {
+            var pid = $(this).parents('.form-group-btn').attr("data-pid");
             if (pid > 0) {
+                // 选中所有的父
                 $.select(pid);
             }
+            var id = $(this).parents('.form-group-btn').attr("data-id");
+            // 选中所有的子
+            $.selectSon(id)
         });
 
+        // 取消选择
         $(".i-checks").on('ifUnchecked', function(event) {
-            var id = $(this).parents('.form-group').attr("data-id");
+            var id = $(this).parents('.form-group-btn').attr("data-id");
             $.unselect(id);
         });
 
-        // 选中
+        // 递归选中父
         $.select = function(pid) {
             $("div[data-id="+pid+"]").each(function(){
                 $(this).find('.i-checks').iCheck('check');
                 var pid = $(this).attr("data-pid");
                 if (pid > 0) {
                     $.select(pid);
+                }
+            })
+        }
+
+        // 递归选中所有的子
+        $.selectSon = function(pid) {
+            $("div[data-pid="+pid+"]").each(function(){
+                $(this).find('.i-checks').iCheck('check');
+                var pid = $(this).attr("data-id");
+                if (pid > 0) {
+                    $.selectSon(pid);
                 }
             })
         }

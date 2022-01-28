@@ -208,6 +208,7 @@ class RoleController extends Controller
         }
         $list = Menus::orderBy('order', 'desc')->get();
         $list = menu_tree_level($list);
+        // dd($list->toArray());
         return view("lazy-view::role.menu", compact('list', 'role'));
     }
 

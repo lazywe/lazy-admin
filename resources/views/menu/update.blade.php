@@ -34,7 +34,7 @@
                                 <option value="0">根菜单</option>
                                 @foreach($list as $k => $v)
                                     @if ($v['level'] < 2)
-                                        <option value="{{$v['id']}}" @if($data['parent_id'] == $v['id']) selected @endif>{!!str_repeat("|--", $v['level']+1)!!}{{ $v['title'] }}</option>
+                                        <option value="{{$v['id']}}" @if($data['parent_id'] == $v['id']) selected @endif>{!!str_repeat("|——", $v['level']+1)!!}（{{$v['order']}}）{{ $v['title'] }}</option>
                                     @endif
                                 @endforeach
                             </select>
@@ -56,6 +56,7 @@
                         <label class="col-sm-2 control-label"><font class="text-danger">* </font>序号：</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" name="order" value="{{ $data->order }}" placeholder="请输入序号，值越大越考前">
+                            <span class="help-block m-b-none">请输入序号，值越大越考前</span>
                         </div>
                     </div>
 

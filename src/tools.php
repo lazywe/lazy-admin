@@ -68,11 +68,11 @@ if (!function_exists('menu_tree_level')) {
      * @param int   $level   菜单层级
      * @param int   $nosonid 无子列表id
      *
-     * @return array
+     * @return Collection
      */
     function menu_tree_level($menus, $pid = 0, $level = 0, $nosonid = 0)
     {
-        $arrs = [];
+        $arrs = collect();
         foreach ($menus as $v) {
             if ($nosonid == $v['id']) {
                 continue;
@@ -80,8 +80,9 @@ if (!function_exists('menu_tree_level')) {
             if ($v['parent_id'] == $pid) {
                 $v['level'] = $level;
                 $next = menu_tree_level($menus, $v['id'], ($v['level']+1), $nosonid);
-                $arrs[] = $v;
-                $arrs = array_merge($arrs, $next);
+                $v['next_count'] = $next->count();
+                $arrs->push($v);
+                $arrs = $arrs->merge($next);
             }
         }
         return $arrs;

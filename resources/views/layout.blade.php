@@ -178,17 +178,25 @@
     <!-- iCheck -->
     @stack('scripts')
     <script>
-        @hasSection('head-title')
-        @else
         $(function(){
-            var title = $(".wrapper-content").find(".ibox .ibox-title h5");
-            if (!title) {
-                title = "当前栏目"
+            try {
+                @hasSection('head-title')
+                @else
+                var titleHtml = $(".wrapper-content").find(".ibox .ibox-title h5");
+                if (!titleHtml) {
+                    title = "当前栏目"
+                } else {
+                    title = titleHtml.html();
+                }
+                $('#right-title').html(title);
+                $('#right-title-two').html(title);
+                @endif
+                // 动态修改title
+                var documentTitle = $("title").html()
+                $("title").html($.trim($("#right-title").text() )+ "-" +  documentTitle)
+            } catch (error) {
             }
-            $('#right-title').html(title.html());
-            $('#right-title-two').html(title.html());
         })
-        @endif
     </script>
 </body>
 </html>

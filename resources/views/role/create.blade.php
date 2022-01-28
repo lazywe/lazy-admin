@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">标识:</label>
+                        <label class="col-sm-2 control-label">标识：</label>
                         <div class="col-sm-9">
                             <input type="text" name="name" class="form-control" placeholder="请输入标识">
                         </div>

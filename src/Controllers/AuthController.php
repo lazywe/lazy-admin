@@ -32,9 +32,9 @@ class AuthController extends Controller
      */
     public function loginDo(Request $request)
     {
-        $credentials = $request->only('account', 'password');
+        $credentials = $request->only('account', 'password', 'referer');
         $validator = Validator::make($credentials, [
-            'account'       => 'required',
+            'account'     => 'required',
             'password'    => 'required',
         ], [
             'account.required' => '名称/邮箱不能为空.',
@@ -64,11 +64,9 @@ class AuthController extends Controller
         // 登录用户
         Auth::guard($guardName)->login($adminUser);
         // 跳回判断
-        $previousUrl = $request->session()->get('previous_url');
         $url = route('lazy-admin.home');
-        if (!empty($previousUrl)) {
-            $request->session()->forget('previous_url');
-            $url = $previousUrl;
+        if (!empty($credentials['referer'])) {
+            $url = urldecode($credentials['referer']);
         }
         return ajaxReturn(1, '成功', ['url'=>$url]);
     }
