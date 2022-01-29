@@ -169,6 +169,7 @@
         var info = self.attr('data-confirm-info');
         var url = self.attr('data-url');
         var method = self.attr('data-method');
+        var loadInfo = self.attr('data-load-info')
         var batch_data = [];
         // 批量数据获取
         try {
@@ -195,6 +196,9 @@
             console.error('未定义请求地址(data-url)');
             return
         }
+        if (typeof loadInfo != "string") {
+            loadInfo = "处理中...";
+        }
         try {
             var trueFun = eval(self.attr('data-truefun'));
             var cancelfun = eval(self.attr('data-cancelfun'));
@@ -204,7 +208,10 @@
         var data = { data: batch_data };
         // 绑定事件
         $.confirm(info, function () {
-            $.ajaxRequest(url, data, method, trueFun);
+            var index = $.showLoading(loadInfo);
+            $.ajaxRequest(url, data, method, trueFun, function(){
+                $.closeLoading(index);
+            });
         }, function () {
             typeof cancelfun == "function" && cancelfun(self)
         })
@@ -259,6 +266,11 @@
         var info = self.attr('data-confirm-info');
         var url = self.attr('data-url');
         var method = self.attr('data-method');
+        var loadInfo = self.attr('data-load-info');
+
+        if (typeof loadInfo != "string") {
+            loadInfo = "处理中..."
+        }
 
         // 未定义请求地址
         if (typeof url != 'string') {
@@ -282,7 +294,10 @@
 
         // 绑定事件
         $.confirm(info, function () {
-            $.ajaxRequest(url, data, method, trueFun);
+            var index = $.showLoading(loadInfo);
+            $.ajaxRequest(url, data, method, trueFun, function(){
+                $.closeLoading(index);
+            });
         }, function () {
             typeof cancelfun == "function" && cancelfun(self)
         })
@@ -304,11 +319,15 @@
         var info = self.attr('data-confirm-info');
         var url = self.attr('data-url');
         var method = self.attr('data-method');
+        var loadInfo = self.attr('data-load-info');
 
         // 未定义请求地址
         if (typeof url != 'string') {
             console.error('未定义请求地址(data-url)');
             return
+        }
+        if (typeof loadInfo != 'string') {
+            loadInfo = "处理中...";
         }
         var data = {};
         try {
@@ -337,7 +356,10 @@
                     toastr.error("二次确认不正确~");
                     return false;
                 }
-                $.ajaxRequest(url, data, method, trueFun);
+                var index = $.showLoading(loadInfo);
+                $.ajaxRequest(url, data, method, trueFun, function(){
+                    $.closeLoading(index)
+                });
                 layer.close(index);
             }
         });
@@ -360,6 +382,7 @@
         var method = self.data('method');
         var prompt = self.data('prompt');
         var dvalue = self.data('default');
+        var loadInfo = self.data('load-info');
 
         // 未定义请求地址
         if (typeof url != 'string') {
@@ -370,6 +393,10 @@
         if (typeof prompt != 'string') {
             console.error('未定义请求地址(data-prompt)');
             return
+        }
+
+        if (typeof loadInfo != 'string') {
+            loadInfo = "处理中...";
         }
         var data = {};
         try {
@@ -394,8 +421,11 @@
                 skin: 'layui-layer-molv',
             },
             function(value, index) {
+                var index = $.showLoading(loadInfo);
                 data[prompt] = value
-                $.ajaxRequest(url, data, method, trueFun);
+                $.ajaxRequest(url, data, method, trueFun, function(){
+                    $.closeLoading(index);
+                });
                 layer.close(index);
             }
         );
@@ -430,15 +460,22 @@
         var form = t.parents('form:first');
         var data = form.serialize();
         var url = form.attr('action');
+        var loadInfo = form.attr('data-load-info');
         if (url == '') {
             toastr.error('非法的action');
             return
+        }
+        if (typeof loadInfo != 'string') {
+            loadInfo = "处理中...";
         }
         var method = form.attr('method');
         try {
             var fun = eval(form.attr('data-fun'))
         } catch (error) { }
-        $.ajaxRequest(url, data, method, fun)
+        var index = $.showLoading(loadInfo);
+        $.ajaxRequest(url, data, method, fun, function(){
+            $.closeLoading(index);
+        })
     }
 
     /**
@@ -459,7 +496,10 @@
         // todo add
         var value = self.attr('data-default');
         var max = self.attr('data-max');
-
+        var loadInfo = self.attr('data-load-info');
+        if (typeof loadInfo != 'string') {
+            loadInfo = "处理中...";
+        }
         // 未定义请求地址
         if (typeof url != 'string') {
             console.error('未定义请求地址(data-url)');
@@ -500,7 +540,10 @@
                     }
                 }
             }
-            $.ajaxRequest(url, data, method, reqTrueFun);
+            var index = $.showLoading(loadInfo);
+            $.ajaxRequest(url, data, method, reqTrueFun, function(){
+                $.closeLoading(index);
+            });
         })
     })
 
@@ -512,18 +555,24 @@
     $('body').on('click', '.btn-submit-upload', function () {
         var t = $(this);
         var form = t.parents('form:first');
-        // var data = form.serialize();
         var formData = new FormData(form.get(0));
         var url = form.attr('action');
+        var loadInfo = form.attr('data-load-info')
         if (url == '') {
             toastr.error('非法的action');
             return
+        }
+        if (typeof loadInfo != "string") {
+            loadInfo = "提交中..."
         }
         var method = form.attr('method');
         try {
             var fun = eval(form.attr('data-fun'))
         } catch (error) { }
-        $.ajaxUploadRequest(url, formData, method, fun)
+        var index = $.showLoading(loadInfo);
+        $.ajaxUploadRequest(url, formData, method, fun, function(){
+            $.closeLoading(index);
+        })
     })
 
     /**
