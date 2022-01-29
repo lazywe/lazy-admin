@@ -126,7 +126,7 @@
             value:value,
             maxlength:parseInt(maxlength),
             skin: 'layui-layer-prompt layui-layer-molv layui-layer-dialog',
-        }, function (text) {
+        }, function (text, index) {
             typeof trueFun == "function" && trueFun(text, index);
         });
     }
@@ -466,7 +466,7 @@
             return
         }
         if (typeof loadInfo != 'string') {
-            loadInfo = "处理中...";
+            loadInfo = "提交中...";
         }
         var method = form.attr('method');
         try {
@@ -540,9 +540,9 @@
                     }
                 }
             }
-            var index = $.showLoading(loadInfo);
+            var loadIndex = $.showLoading(loadInfo);
             $.ajaxRequest(url, data, method, reqTrueFun, function(){
-                $.closeLoading(index);
+                $.closeLoading(loadIndex);
             });
         })
     })
@@ -636,7 +636,7 @@
                 // 非200
                 if (data.status != 1) { //
                     // 其他错误
-                    layer.msg(data.info);
+                    toastr.error(data.info);
                     return true;
                 } else {
                     toastr.success(data.info);
@@ -699,7 +699,7 @@
                 // 非200
                 if (data.status != 1) { //
                     // 其他错误
-                    layer.msg(data.info);
+                    toastr.error(data.info);
                     return true;
                 } else {
                     toastr.success(data.info);
