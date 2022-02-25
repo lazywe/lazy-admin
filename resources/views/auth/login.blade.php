@@ -10,7 +10,7 @@
     <link href="{{ lazy_asset('css/bootstrap.min14ed.css') }}" rel="stylesheet">
     <link href="{{ lazy_asset('css/font-awesome.min93e3.css') }}" rel="stylesheet">
     <link href="{{ lazy_asset('css/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/style.min862f.css') }}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}" rel="stylesheet">
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
