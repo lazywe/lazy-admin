@@ -9,7 +9,7 @@
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>添加菜单</h5>
+                <h5>修改菜单</h5>
                 <div class="ibox-tools">
                     <button type="button" class="btn btn-xs btn-danger history-back">
                         <i class="fa fa-times"></i>

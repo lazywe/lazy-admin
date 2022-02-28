@@ -23,7 +23,7 @@
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>权限菜单</h5>
+                <h5>设置用户菜单权限</h5>
 
                 <div class="ibox-tools">
                     <button type="button" class="btn btn-xs btn-danger history-back">

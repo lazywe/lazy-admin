@@ -6,7 +6,7 @@
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>添加权限</h5>
+                <h5>修改权限</h5>
 
                 <div class="ibox-tools">
                     <button type="button" class="btn btn-xs btn-danger history-back">
