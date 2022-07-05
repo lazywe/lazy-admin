@@ -344,6 +344,7 @@
         }
 
         var content = '<input placeholder="请输入“确认”，防止误操作" class="input-sm form-control input-s-sm inline confirm-dom confirm-t"/>';
+        content += '<span class="text text-danger">'+info+'</span>';
         // 绑定事件
         layer.open({
             skin: 'layui-layer-molv',

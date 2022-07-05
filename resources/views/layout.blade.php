@@ -16,7 +16,7 @@
     <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
     @stack('css')
     <script>
-        window.DEBUG = "{{ env('APP_DEBUG', false) }}";
+        window.DEBUG = "{{ config('app.debug') }}";
         window.FormToken = "{{ csrf_token() }}";
         window.Referer = "{!! app('url')->previous() !!}"
         window.AdminHome = "/{{ config('lazy-admin.prefix') }}"

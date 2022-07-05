@@ -19,7 +19,7 @@
       if (window.top !== window.self) {
         window.top.location = window.location;
       }
-      window.DEBUG = "{{ env('APP_DEBUG', false) }}";
+      window.DEBUG = "{{ config('app.debug') }}";
       window.FormToken = "{{ csrf_token() }}";
     </script>
 </head>
