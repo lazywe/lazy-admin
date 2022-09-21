@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="{{ lazy_asset('img/favicon.ico') }}">
     <link href="{{ lazy_asset('css/bootstrap.min14ed.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
     <link href="{{ lazy_asset('css/font-awesome.min93e3.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
-    <link href="{{ lazy_asset('css/style.min862f.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
+    <link href="{{ lazy_asset('css/style.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
     <link href="{{ lazy_asset('css/plugins/toastr/toastr.min.css') }}?time={{config('lazy-admin.timestamp')}}" rel="stylesheet">
     @stack('css')
     <script>
