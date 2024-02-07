@@ -6,11 +6,15 @@ use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Lazy\Admin\Guard;
 use Lazy\Admin\Models\AdminUser;
 
 class AuthController extends Controller
 {
+
+    protected $redirectToSessionKey = 'redirect_to';
+
     /**
      * 登录页面
      *
@@ -20,6 +24,9 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        if (URL::current() != URL::previous()) {
+            $request->session()->put($this->redirectToSessionKey, URL::previous());
+        }
         return view('lazy-view::auth.login');
     }
 
@@ -65,8 +72,10 @@ class AuthController extends Controller
         Auth::guard($guardName)->login($adminUser);
         // 跳回判断
         $url = route('lazy-admin.home');
-        if (!empty($credentials['referer'])) {
-            $url = urldecode($credentials['referer']);
+        $redirectTo = $request->session()->get($this->redirectToSessionKey);
+        if (!empty($redirectTo)) {
+            $url = $redirectTo;
+            $request->session()->forget($this->redirectToSessionKey);
         }
         return ajaxReturn(1, '成功', ['url'=>$url]);
     }
